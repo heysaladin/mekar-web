@@ -1,0 +1,73 @@
+{
+    "status": {
+        "PENDING": {
+            "label": "Menunggu",
+            "note": "Barang Belum diterima di Pinjam Indonesia",
+            "todo": "Silahkan mengirim barang gadai Anda ke lokasi yang tersedia"
+        },
+        "DECLINED": {
+            "label": "Batal",
+            "note": "Pinjaman dibatalkan"
+        },
+        "WAITAPPROVE": {
+            "label": "Pinjaman masih menunggu Persetujuan",
+            "todo": "Terimakasih atas pengajuan Anda. Pinjaman Anda sedang dalam proses persetujuan."
+        },
+        "WAITDISBURSE": {
+            "label": "Menunggu Pencairan",
+            "note": "Pinjaman masih menunggu Pencairan Dana",
+            "todo": "Dana pinjaman sedang dalam proses pencairan. Mohon menunggu sebentar."
+        },
+        "ONGOING": {
+            "label": "Aktif",
+            "note": "Pinjaman sedang berjalan"
+        },
+        "DUEDATE": {
+            "label": "Jatuhtempo",
+            "note": "Pinjaman telah sampai jatuh tempo"
+        },
+        "EXTENDED": {
+            "label": "Perpanjangan",
+            "note": "Pinjaman sedang berjalan, dan diperpanjang"
+        },
+        "LATE": {
+            "label": "Telat",
+            "note": "Telat",
+            "todo": "Segera konfirmasi pembayaran Anda"
+        },
+        "AUCTION": {
+            "label": "Lelang",
+            "note": "Lelang",
+            "todo": "Barang gadai Anda dalam proses Lelang"
+        },
+        "CLOSED": {
+            "label": "Lunas",
+            "note": "Pinjaman sudah dibayar lunas"
+        },
+        "SOLD": {
+            "label": "Terjual",
+            "note": "Pinjaman di ambil alih",
+            "todo": "Barang gadai Anda sudah terjual"
+        },
+        "DELIVERED": {
+            "label": "Menunggu Konfirmasi",
+            "note": "Menunggu Konfirmasi dari Anda",
+            "todo": "Silahkan konfirmasi transaksi gadai Anda"
+        },
+        "NONCONTRACT": {
+            "label": "Non Kontrak",
+            "note": "Non Kontrak",
+            "todo": "Silahkan datang ke cabang kantor Pinjam Indonesia untuk tanda tangan kontrak secepatnya"
+        },
+        "TAKEOVER": {
+            "label": "Ambil Alih",
+            "note": "Pinjaman di ambil alih",
+            "todo": "Segera tebus barang gadai Anda"
+        },
+        "SOLDOUT": {
+            "label": "Habis Terjual",
+            "note": "Pinjaman habis terjual",
+            "todo": "Barang gadai Anda telah habis terjual"
+        }
+    }
+}

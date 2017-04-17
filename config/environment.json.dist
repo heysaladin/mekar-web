@@ -1,0 +1,36 @@
+{
+    "NODE_ENV": "development",
+    "BASEURL": "http://webdev.pinjam.co.id:9090",
+    "SECRETKEY": "dop32d9834uruw3ipofhwh4fq4",
+    "APIHOST": "http://devapi.pinjam.co.id",
+    "APIPORT": 4171,
+    "APIPREFIX": "",
+    "PINJAM_KONTRAK": "http://devadmin.pinjam.co.id",
+    "VENDOR": {
+        "google": {
+            "analytics": {
+                "id": "UA-61196383-2"
+            },
+            "maps": {
+                "key": "AIzaSyCsHJr0wHKsxa4mWhaDHgktOE45wKhrW9A",
+                "language": "id"
+            }
+        },
+        "facebook": {
+            "pixel": {
+                "id": "524961534362362"
+            }
+        },
+        "amazon": {
+            "s3": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg4IiwiaXNzIjoiM2E0YjA0MzcxMmY5NDc2N2EwODI5OTM5MDAwMjhhYTUifQ.UxXxZZjn2BN0CXjxLDsZ7BsZeLMQhKWCDTmQiZ2PQyo",
+                "userId": "88"
+            }
+        },
+        "mixpanel": {
+            "analytics": {
+                "id": "88f4c44c744b6b339eefddc255bc6e95"
+            }
+        }
+    }
+}

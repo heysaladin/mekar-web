@@ -1,0 +1,205 @@
+{
+    "center": [-6.183047999999999,
+        106.816793
+    ],
+    "branchs": [{
+            "id": 11,
+            "isMitra": false,
+            "category": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                10
+            ],
+            "name": "Pinjam.co.id - Sungai Sambas",
+            "address": "Jl. Sungai Sambas II No. 13 Kebayoran Baru, Jakarta",
+            "telephoneLabel": "(021) 2750 6800",
+            "telephone": "+622127506800",
+            "email": "abcdef@pinjam.co.id",
+            "lat": -6.247198,
+            "lng": 106.7974629
+        },
+        {
+            "id": 14,
+            "isMitra": false,
+            "category": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                10
+            ],
+            "name": "Pinjam.co.id - Tanah Abang",
+            "address": "Pasar Tanah Abang, Blok B Lantai 5 Los E No. 50 Jakarta Pusat",
+            "telephoneLabel": "(021) 2357 3545",
+            "telephone": "+622123573545",
+            "email": "abcdef@pinjam.co.id",
+            "lat": -6.183047999999999,
+            "lng": 106.816793
+        },
+        {
+            "id": 18,
+            "isMitra": false,
+            "category": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                10
+            ],
+            "name": "Pinjam.co.id - Grogol",
+            "address": "Jl. Daan Mogot Raya No. 99A Grogol Petamburan, Jakarta Barat",
+            "telephoneLabel": "(021) 2933 4586",
+            "telephone": "+622129334586",
+            "email": "abcdef@pinjam.co.id",
+            "lat": -6.164769,
+            "lng": 106.777531
+        },
+        {
+            "id": 19,
+            "isMitra": true,
+            "visible": false,
+            "category": [
+                1,
+                2,
+                3,
+                4,
+                10
+            ],
+            "name": "BPRS Fajar Sejahtera Bali",
+            "address": "Jl Raya Kuta 75A",
+            "lat": -8.7144408,
+            "lng": 115.178959
+        },
+        {
+            "id": 21,
+            "isMitra": true,
+            "category": [
+                6,
+                7
+            ],
+            "name": "Toko Mas Indra Cab Mangga Dua Square",
+            "address": "Mangga Dua Square Lt GF Blok BP No 16-Jakarta Utara",
+            "telephoneLabel": "0878 8302 7372",
+            "telephone": "+6287883027372",
+            "picName": "Yenny",
+            "lat": -6.1368684,
+            "lng": 106.8307962
+        },
+        {
+            "id": 22,
+            "isMitra": true,
+            "category": [
+                2
+            ],
+            "name": "Toko Mobo Laptop ITC Cempaka Mas",
+            "address": "Jl Letjen Suprapto Kemayoran ITC Cempaka Mas Lt 4 Blok I No 732 A",
+            "telephoneLabel": "0821 3456 5356",
+            "telephone": "+6282134565356",
+            "picName": "Syaifullah",
+            "lat": -6.1644731,
+            "lng": 106.8786664
+        },
+        {
+            "id": 23,
+            "isMitra": true,
+            "category": [
+                10
+            ],
+            "name": "PT. Cipta Perdana Sejahtera, Jatiwaringin, Bekasi",
+            "address": "Jl. Setia 2 no. 63 Rt 005 rw 004, Jatiwaringin, Pondok Gede, Bekasi",
+            "telephoneLabel": "0813 8080 1055",
+            "telephone": "+6281380801055",
+            "picName": "Muafif",
+            "lat": -6.2712071,
+            "lng": 106.9146025
+        },
+        {
+            "id": 24,
+            "isMitra": true,
+            "category": [
+                6,
+                7
+            ],
+            "name": "Toko Princess Jewellery ITC Cempaka Mas",
+            "address": "ITC Cempaka Mas Lt LG no. 73",
+            "telephoneLabel": "(021) 4288 4895",
+            "telephone": "+622142884895",
+            "picName": "Hendra",
+            "lat": -6.164769,
+            "lng": 106.8751683
+        },
+        {
+            "id": 26,
+            "isMitra": true,
+            "category": [
+                6,
+                7
+            ],
+            "name": "Toko Teguh Mas Pasar Anyar Tangerang",
+            "address": "Jl Ahmad Yani Blok A No 23 Pasar Anyar -Kota Tangerang",
+            "telephoneLabel": "0812 9225 969",
+            "telephone": "+628129225969",
+            "picName": "Firman",
+            "lat": -6.1756964,
+            "lng": 106.6333194
+        },
+        {
+            "id": 28,
+            "isMitra": true,
+            "category": [
+                6,
+                7
+            ],
+            "name": "Toko Emas Mulia",
+            "address": "Pasar Mampang Prapatan AKS 037 - Jakarta Selatan",
+            "telephoneLabel": "0822 9929 4168",
+            "telephone": "+6282299294168",
+            "picName": "Yohanes",
+            "lat": -6.2409123,
+            "lng": 106.8230027
+        },
+        {
+            "id": 29,
+            "isMitra": true,
+            "category": [
+                2,
+                3,
+                4,
+                5
+            ],
+            "name": "PT Prioritas Mitra Indonesia / Toko Brilliant",
+            "address": "Harco Mangga Dua Lt Dasar Blok B No 68 - Jakarta Pusat",
+            "telephoneLabel": "0811 8110 536",
+            "telephone": "+628118110536",
+            "picName": "Yanti",
+            "lat": -6.1378856,
+            "lng": 106.8268518
+        },
+        {
+            "id": 31,
+            "isMitra": true,
+            "category": [
+                6,
+                7
+            ],
+            "name": "Toko Emas Mutiara",
+            "address": "Pasar Kedoya Blok A L00 AKS 125-126-Jakarta Barat",
+            "telephoneLabel": "0822 2729 3388",
+            "telephone": "+6282227293388",
+            "picName": "Tjie Kian",
+            "lat": -6.1737555,
+            "lng": 106.7602253
+        }
+    ]
+}

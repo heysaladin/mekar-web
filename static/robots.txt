@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /membership/*
+Sitemap: https://pinjam.co.id/sitemap.xml

@@ -1,0 +1,11 @@
+{
+    "apps": [{
+        "name": "pinjam-main-web",
+        "script": "./bin/server.js",
+        "exec_mode": "cluster",
+        "env": {
+            "NODE_PATH": "./src",
+            "NODE_ENV": "production"
+        }
+    }]
+}

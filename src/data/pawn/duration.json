@@ -1,0 +1,56 @@
+{
+  "type": [{
+    "label": "Bulanan",
+    "value": "B"
+  }, {
+    "label": "Mingguan",
+    "value": "M"
+  }],
+  "monthly": [{
+    "label": "1 Bulan",
+    "value": "1"
+  }, {
+    "label": "2 Bulan",
+    "value": "2"
+  }, {
+    "label": "3 Bulan",
+    "value": "3"
+  }],
+  "weekly": [{
+    "label": "1 Minggu",
+    "value": "1"
+  }, {
+    "label": "2 Minggu",
+    "value": "2"
+  }, {
+    "label": "3 Minggu",
+    "value": "3"
+  }, {
+    "label": "4 Minggu",
+    "value": "4"
+  }, {
+    "label": "5 Minggu",
+    "value": "5"
+  }, {
+    "label": "6 Minggu",
+    "value": "6"
+  }, {
+    "label": "7 Minggu",
+    "value": "7"
+  }, {
+    "label": "8 Minggu",
+    "value": "8"
+  }, {
+    "label": "9 Minggu",
+    "value": "9"
+  }, {
+    "label": "10 Minggu",
+    "value": "10"
+  }, {
+    "label": "11 Minggu",
+    "value": "11"
+  }, {
+    "label": "12 Minggu",
+    "value": "12"
+  }]
+}
