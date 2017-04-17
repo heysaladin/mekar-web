@@ -1,6 +1,6 @@
-# Pinjam.co.id Website
+# Mekar Website
 
-Workspace Frontend for Pinjam.co.id
+Workspace Frontend for Mekar Website
 
 
 ## Composition
