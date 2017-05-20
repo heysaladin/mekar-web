@@ -73,6 +73,8 @@ class Footer extends Component {
           <Spacer />
           <img src={logoOJK} alt="OJK" height="62" width="144" />*/}
 
+          <span className={classes.verticalLine}></span>
+
           <Spacer />
 
           <span>{config.app.copyright}</span>

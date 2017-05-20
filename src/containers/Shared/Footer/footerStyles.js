@@ -6,6 +6,7 @@ export default {
     // borderTop: '1px solid #AFAFAF',
     // background: '#E1E1E1',
     padding: '25px 0',
+    background: '#fff',
   },
   footerContainer: {
     margin: '0 auto',
@@ -41,5 +42,15 @@ export default {
   socialMediaSmallIcon: {
     width: 16,
     height: 16
+  },
+  verticalLine: {
+    display: 'block',
+    width: 1,
+    height: 30,
+    margin: '-40px auto 0',
+    background: '#ccc',
+    position: 'absolute',
+    left: 0,
+    right: 0
   }
 };
