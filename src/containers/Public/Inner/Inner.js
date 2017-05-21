@@ -4,11 +4,15 @@ import Helmet from 'react-helmet';
 import injectSheet from 'react-jss';
 // import Card from 'material-ui/Card/Card';
 
+import listPartners from 'data/branch.json';
+
 import SearchBox from './SearchBox';
+
+import sampleImage from './img/mekar.jpg';
 
 import { Container, Header, Spacer } from '../../UI';
 import { Content } from '../../UI';
-import { Link } from '../../UI';
+// import { Link } from '../../UI';
 
 import Layout from '../../App/Layout';
 
@@ -34,11 +38,60 @@ const styles = {
     margin: '-116px auto 0'
   },
   listWrapper: {
-    margin: '50px auto'
+    width: '100%',
+    margin: '50px auto',
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexWrap: 'wrap'
+  },
+  gridItem: {
+    width: 'auto',
+    margin: '8px 0'
+  },
+  gridCard: {
+    width: 280,
+    height: 212,
+    background: 'white',
+    borderRadius: 8,
+    boxShadow: '0 0 5px rgba(0,0,0,.25)',
+    position: 'relative',
+    margin: '126px auto 0'
+  },
+  gridContentWrapper: {
+    width: 252,
+    margin: '-126px auto 0',
+    position: 'absolute',
+    left: 0,
+    right: 0
+  },
+  gridImageWrapper: {
+    width: 252,
+    height: 252,
+    borderRadius: 8,
+    overflow: 'hidden'
+  },
+  gridImage: {
+    width: 'auto',
+    height: 'inherit',
+    margin: '0 auto'
+  },
+  gridTitle: {
+    textAlign: 'center',
+    color: '#15904e',
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+    margin: '15px 0 0'
+  },
+  gridBodyCopy: {
+    textAlign: 'center',
+    color: '#ababab',
+    fontSize: 12,
+    margin: '5px 0'
   },
   textCenter: Layout.textCenter
 };
-
+/*
 const listPartners = {
   center: [-6.183047999999999, 106.816793],
   branchs: [{
@@ -84,7 +137,7 @@ const listPartners = {
     lng: 106.816793
   }]
 };
-
+*/
 @injectSheet(styles)
 
 export default class Inner extends Component {
@@ -149,6 +202,16 @@ export default class Inner extends Component {
     const { sheet: {
         classes
       } } = this.props;
+      /* <Content
+                    key={`mitra-${mitra.number}`} className={classes.item}>
+                    <h4 className={classes.itemTitle}>{mitra.name}</h4>
+                    {mitra.address}
+                    <br />
+                    Telp. <Link
+                      className={classes.noUnderline}
+                      href={`tel: ${mitra.telephone}`}>
+                      {mitra.telephoneLabel}</Link>
+                  </Content>*/
     return (
       <div>
         <div className={classes.openingArea}></div>
@@ -159,23 +222,47 @@ export default class Inner extends Component {
           <Header primaryText="Some Title of List" />
           <SearchBox onSearch={this.onSearch} />
           <span className={classes.verticalLine}></span>
-          <div className={classes.listWrapper}>
+          <div>
+            {/* <div className={classes.gridItem}>
+              <div className={classes.gridCard}>
+                <div className={classes.gridContentWrapper}>
+                  <div className={classes.gridImageWrapper}>
+                    <img className={classes.gridImage} src={`${sampleImage}`} alt="Mekar" />
+                  </div>
+                  <h4 className={classes.gridTitle}>sebuah judul yang normal</h4>
+                  <p className={classes.gridBodyCopy}>penjelasan yang panjangnya normal</p>
+                </div>
+              </div>
+            </div>
+            <div className={classes.gridItem}>
+              <div className={classes.gridCard}>
+                <div className={classes.gridContentWrapper}>
+                  <div className={classes.gridImageWrapper}>
+                    <img className={classes.gridImage} src={`${sampleImage}`} alt="Mekar" />
+                  </div>
+                  <h4 className={classes.gridTitle}>sebuah judul yang normal</h4>
+                  <p className={classes.gridBodyCopy}>penjelasan yang panjangnya normal</p>
+                </div>
+              </div>
+            </div>*/}
             {this
             .getPartners()
-            .length > 0 && <div>
+            .length > 0 && <div className={classes.listWrapper}>
               {this
                 .getPartners()
-                .map((mitra) =>
-                  <Content
-                    key={`mitra-${mitra.number}`} className={classes.item}>
-                    <h4 className={classes.itemTitle}>{mitra.name}</h4>
-                    {mitra.address}
-                    <br />
-                    Telp. <Link
-                      className={classes.noUnderline}
-                      href={`tel: ${mitra.telephone}`}>
-                      {mitra.telephoneLabel}</Link>
-                  </Content>)
+                .map(
+                  (mitra) => <div key={`mitra-${mitra.number}`} className={classes.gridItem}>
+                    <div className={classes.gridCard}>
+                      <div className={classes.gridContentWrapper}>
+                        <div className={classes.gridImageWrapper}>
+                          <img className={classes.gridImage} src={`${sampleImage}`} alt="Mekar" />
+                        </div>
+                        <h4 className={classes.gridTitle}>{mitra.name}</h4>
+                        <p className={classes.gridBodyCopy}>{mitra.telephone}</p>
+                      </div>
+                    </div>
+                  </div>
+                  )
               }
             </div>}
             {this
