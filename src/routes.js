@@ -53,6 +53,9 @@ export default store => {
         </Route>
 
         {/* Routes */}
+        <Route
+          path="inner"
+          getComponent={() => System.import('./containers/Public/Inner/Inner')} />
         {/* <Route
           path="alamat-cabang-mitra"
           getComponent={() => System.import('./containers/Public/PartnersAddress/PartnersAddress')} />

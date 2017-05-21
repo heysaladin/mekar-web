@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import injectSheet from 'react-jss';
 // import Card from 'material-ui/Card/Card';
@@ -11,6 +12,12 @@ import injectSheet from 'react-jss';
 import { Container, Spacer } from '../../UI'; // Content,
 
 import decorator from './decorator.png';
+import illustrationClassdiagram from './illustration-1-classdiagram.png';
+import illustrationArrow from './illustration-arrow.png';
+import illustrationWebapp from './illustration-2-webapp.png';
+import featureQuick from './icon-feature-1-quick.png';
+import featureModular from './icon-feature-2-modular.png';
+import featureScalable from './icon-feature-3-scalable.png';
 
 const styles = {
   openingArea: {
@@ -94,7 +101,7 @@ const styles = {
   },
   iconWrapper: {
     position: 'absolute',
-    marginTop: -50,
+    marginTop: -63,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -104,11 +111,35 @@ const styles = {
     flex: 1,
     background: 'transparent'
   },
-  iconImage: {
-    width: 100,
-    height: 100,
-    background: '#999',
-    margin: '0 auto'
+  iconImageQuick: {
+    width: 125,
+    height: 125,
+    margin: '0 auto',
+    backgroundSize: 'auto',
+    backgroundColor: 'transparent',
+    backgroundImage: `url(${featureQuick})`,
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat'
+  },
+  iconImageModular: {
+    width: 125,
+    height: 125,
+    margin: '0 auto',
+    backgroundSize: 'auto',
+    backgroundColor: 'transparent',
+    backgroundImage: `url(${featureModular})`,
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat'
+  },
+  iconImageScalable: {
+    width: 125,
+    height: 125,
+    margin: '0 auto',
+    backgroundSize: 'auto',
+    backgroundColor: 'transparent',
+    backgroundImage: `url(${featureScalable})`,
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat'
   },
   iconText: {
     textAlign: 'center',
@@ -126,20 +157,32 @@ const styles = {
   illustrationImageLeft: {
     width: '40%',
     height: '100%',
-    background: '#ccc',
-    flex: 3
+    flex: 3,
+    backgroundSize: 'auto',
+    backgroundColor: 'transparent',
+    backgroundImage: `url(${illustrationClassdiagram})`,
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat'
   },
   illustrationImageCenter: {
     width: '20%',
     height: '100%',
-    background: '#ccc',
-    flex: 1
+    flex: 1,
+    backgroundSize: 'contain',
+    backgroundColor: 'transparent',
+    backgroundImage: `url(${illustrationArrow})`,
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat'
   },
   illustrationImageRight: {
     width: '40%',
     height: '100%',
-    background: '#ccc',
-    flex: 3
+    flex: 3,
+    backgroundSize: 'auto',
+    backgroundColor: 'transparent',
+    backgroundImage: `url(${illustrationWebapp})`,
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat'
   }
 };
 
@@ -214,15 +257,15 @@ export default class Home extends Component {
           <Container>
             <div className={classes.iconWrapper}>
               <div className={classes.iconItem}>
-                <div className={classes.iconImage}></div>
+                <div className={classes.iconImageQuick}></div>
                 <h3 className={classes.iconText}>Quick</h3>
               </div>
               <div className={classes.iconItem}>
-                <div className={classes.iconImage}></div>
+                <div className={classes.iconImageModular}></div>
                 <h3 className={classes.iconText}>Modular</h3>
               </div>
               <div className={classes.iconItem}>
-                <div className={classes.iconImage}></div>
+                <div className={classes.iconImageScalable}></div>
                 <h3 className={classes.iconText}>Scalable</h3>
               </div>
             </div>

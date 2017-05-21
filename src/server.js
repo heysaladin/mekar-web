@@ -22,6 +22,8 @@ import { exposeInitialRequest } from 'app';
 
 process.on('unhandledRejection', error => console.error(error));
 
+process.setMaxListeners(0);
+
 const targetUrl = `http://${config.apiHost}:${config.apiPort}`;
 const pretty = new PrettyError();
 const app = express();

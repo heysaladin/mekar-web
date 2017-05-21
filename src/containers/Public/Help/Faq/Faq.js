@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Divider from 'material-ui/Divider';

@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 
 import Layout from '../App/Layout';
-import Theme from '../App/Theme';
+// import Theme from '../App/Theme';
 
 const styles = {
   title: {
@@ -10,8 +11,8 @@ const styles = {
     fontSize: Layout.fontSize + 8,
     textAlign: 'center',
     textTransform: 'uppercase',
-    margin: 0,
-    color: Theme.primaryTextColor
+    margin: '20px auto',
+    color: 'white'
   },
   subTitle: {
     textAlign: 'center',

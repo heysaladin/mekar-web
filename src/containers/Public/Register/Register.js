@@ -1,9 +1,10 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
 import injectSheet from 'react-jss';
 import Helmet from 'react-helmet';
-import * as authActions from 'redux/modules/auth';
-import * as notifActions from 'redux/modules/notifs';
+// import * as authActions from 'redux/modules/auth';
+// import * as notifActions from 'redux/modules/notifs';
 import Card from 'material-ui/Card/Card';
 
 import { Container, Content, Spacer, Link } from '../../UI';
@@ -19,10 +20,10 @@ import RegisterForm from './RegisterForm';
  * @extends {Component}
  */
 @injectSheet(styles)
-@connect(() => ({}), {
-  ...notifActions,
-  ...authActions
-})
+// @connect(() => ({}), {
+//   ...notifActions,
+//   ...authActions
+// })
 export default class Register extends Component {
   static propTypes = {
     location: PropTypes.object.isRequired,
@@ -72,29 +73,32 @@ export default class Register extends Component {
         classes
       } } = this.props;
     return (
-      <Container>
-        <Helmet title="Daftar" />
-        <Spacer />
-        <Card>
-          <Content>
-            <div className={classes.wrap}>
-              <h3 className={classes.fontTitle}>Selamat datang di Pinjam Indonesia</h3>
+      <div>
+        <div className={classes.openingArea}></div>
+        <Container>
+          <Helmet title="Daftar" />
+          <Spacer />
+          <Card style={styles.card}>
+            <Content>
+              <div className={classes.wrap}>
+                <h3 className={classes.fontTitle}>Selamat datang di Pinjam Indonesia</h3>
 
-              <RegisterForm onSubmit={this.register} initialValues={this.getInitialValues()} />
+                <RegisterForm onSubmit={this.register} initialValues={this.getInitialValues()} />
 
-              <Spacer />
-              <Spacer />
-              <p>Anda sudah punya akun ? &nbsp;
-                <Link to="/masuk">Masuk disini</Link>
-              </p>
-              <Spacer />
-            </div>
-          </Content>
-        </Card>
+                <Spacer />
+                <Spacer />
+                <p>Anda sudah punya akun ? &nbsp;
+                  <Link to="/masuk">Masuk disini</Link>
+                </p>
+                <Spacer />
+              </div>
+            </Content>
+          </Card>
 
-        <Spacer />
+          <Spacer />
 
-      </Container>
+        </Container>
+      </div>
     );
   }
 }

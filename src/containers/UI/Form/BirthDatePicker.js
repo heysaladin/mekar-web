@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
 import View from 'react-flexbox';
 import MenuItem from 'material-ui/MenuItem';
 import { Field, reduxForm } from 'redux-form';

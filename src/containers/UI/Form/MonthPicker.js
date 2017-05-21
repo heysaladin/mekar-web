@@ -1,8 +1,9 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import View from 'react-flexbox';
 import MenuItem from 'material-ui/MenuItem';
-import {Field} from 'redux-form';
-import {SelectField} from 'redux-form-material-ui';
+import { Field } from 'redux-form';
+import { SelectField } from 'redux-form-material-ui';
 
 import dataDateTime from '../../../data/datetime.json';
 

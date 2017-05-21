@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Card from 'material-ui/Card/Card';
 import Helmet from 'react-helmet';
 import injectSheet from 'react-jss';

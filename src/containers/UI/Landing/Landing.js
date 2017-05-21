@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 
 import styles from './landingStyles';
 
 @injectSheet(styles)
-export default class BPILanding extends Component {
+export default class Landing extends Component {
 
   static propTypes = {
     children: PropTypes.node.isRequired,

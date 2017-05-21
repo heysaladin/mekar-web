@@ -1,7 +1,7 @@
 {
-  "name": "pinjam-main-web",
-  "description": "Workspace Frontend for Pinjam.co.id",
-  "author": "Pinjam Dev",
+  "name": "mekar-web",
+  "description": "Workspace Frontend for mekar.co.id",
+  "author": "Mekar Dev",
   "version": "2.5.0",
   "keywords": [
     "react",
@@ -12,11 +12,11 @@
     "react-hot-reloader",
     "redux",
     "babel",
-    "pinjam"
+    "mekar"
   ],
   "main": "bin/server.js",
   "scripts": {
-    "show": "pm2 show pinjam-main-web",
+    "show": "pm2 show mekar-web",
     "online": "pm2 start ./pm2.json",
     "reonline": "pm2 restart ./pm2.json",
     "offline": "pm2 stop ./pm2.json",
@@ -188,6 +188,7 @@
     "phantomjs-prebuilt": "^2.1.14",
     "piping": "^1.0.0-rc.4",
     "postcss-loader": "^2.0.5",
+    "prop-types": "^15.5.10",
     "react-a11y": "^0.3.3",
     "react-addons-test-utils": "^15.4.2",
     "react-hot-loader": "^3.0.0-beta.3",
@@ -210,6 +211,6 @@
     "webpack-isomorphic-tools": "^2.6.6"
   },
   "engines": {
-    "node": "5.6.0"
+    "node": "7.5.0"
   }
 }

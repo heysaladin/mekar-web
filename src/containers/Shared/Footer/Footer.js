@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 // import IconButton from 'material-ui/IconButton';
 // import FaFacebook from 'react-icons/lib/fa/facebook';
