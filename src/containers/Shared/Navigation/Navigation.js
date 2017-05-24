@@ -275,6 +275,10 @@ export default class Navigation extends Component {
             <NavigationItem label="Daftar" leftIcon={<MdAccountBox />} to="/register" afterTouch={close} />
             <NavigationItem label="Masuk" leftIcon={<MdAccountBox />} to="/login" afterTouch={close} />
           </div>}
+          <Divider />
+          <NavigationItem label="Inner" leftIcon={<MdAccountBox />} to="/inner" afterTouch={close} />
+          <NavigationItem label="Profile" leftIcon={<MdAccountBox />} to="/profile" afterTouch={close} />
+          <NavigationItem label="Dashboard" leftIcon={<MdAccountBox />} to="/dashboard" afterTouch={close} />
         </List>
       </Drawer>
     );
