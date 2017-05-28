@@ -79,7 +79,8 @@ const styles = {
     position: 'absolute',
     left: 0,
     right: 0,
-    margin: '140px auto 0'
+    margin: '140px auto 0',
+    width: '70%'
   },
   contentText: {
     textAlign: 'center',
@@ -105,7 +106,9 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-around',
-    width: '100%'
+    width: '100%',
+    left: 0,
+    right: 0
   },
   iconItem: {
     flex: 1,
@@ -158,7 +161,7 @@ const styles = {
     width: '40%',
     height: '100%',
     flex: 3,
-    backgroundSize: 'auto',
+    backgroundSize: 'contain',
     backgroundColor: 'transparent',
     backgroundImage: `url(${illustrationClassdiagram})`,
     backgroundPosition: 'center center',
@@ -178,7 +181,7 @@ const styles = {
     width: '40%',
     height: '100%',
     flex: 3,
-    backgroundSize: 'auto',
+    backgroundSize: 'contain',
     backgroundColor: 'transparent',
     backgroundImage: `url(${illustrationWebapp})`,
     backgroundPosition: 'center center',
@@ -242,14 +245,14 @@ export default class Home extends Component {
               regards,
               <br />
               <br />
-              <strong>Pinjam's Front End Team</strong>
+              <strong>Mekar's Front End Team</strong>
             </Content>
           </Card>*/}
 
           <Spacer />
           <div className={classes.contentWrapper}>
-            <h4 className={classes.contentText}>Pretty Web App Generator Pretty Web App Generator</h4>
-            <p className={classes.contentBodyCopy}>Creating Web App Like Joy The Flower Blossom</p>
+            <h4 className={classes.contentText}>Create web applications that are modular and have high scalability in a short time</h4>
+            <p className={classes.contentBodyCopy}>Convert the Class Diagram into a web application.</p>
           </div>
 
         </Container>

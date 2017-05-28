@@ -87,7 +87,7 @@ export default class ContactUs extends Component {
     return (
       <Container>
         <Helmet
-          title="Hubungi Kami Pinjam Indonesia" />
+          title="Hubungi Kami Mekar Indonesia" />
         <Spacer />
         <Header primaryText="Hubungi Kami" />
         <Spacer />

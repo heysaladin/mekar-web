@@ -157,14 +157,14 @@ export default class Faq extends Component {
             <Divider />
             <div className={classes.content}>
               <strong>Tanya:</strong><br /><br />
-              <div>9. Apa saja program promo yang berlaku di &nbsp;<strong>Pinjam.co.id</strong>&nbsp; saat ini ?</div>
+              <div>9. Apa saja program promo yang berlaku di &nbsp;<strong>Mekar.co.id</strong>&nbsp; saat ini ?</div>
               <br />
               <strong>Jawab:</strong><br /><br />
               <div>Adapun program promosi yang berlaku saat ini adalah:<ol>
                 <li>Bebas biaya administrasi (berlaku sampai 31 Desember 2016)</li>
                 <li>Gratis penyimpanan dan asuransi barang untuk &quot;Dana Siaga&quot; (berlaku
                   sampai 31 Desember 2016)</li>
-                <li>Promo Pinjam tanpa Bunga dengan kode refferal (berlaku sampai 31 Desember 2016)</li>
+                <li>Promo Mekar tanpa Bunga dengan kode refferal (berlaku sampai 31 Desember 2016)</li>
               </ol>
               </div>
             </div>

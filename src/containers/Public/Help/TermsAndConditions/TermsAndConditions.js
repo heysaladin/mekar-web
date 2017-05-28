@@ -17,7 +17,7 @@ export default class TermsAndConditions extends Component {
     return (
       <Container>
         <Helmet
-          title="Syarat dan Ketentuan di Pinjam Indonesia" />
+          title="Syarat dan Ketentuan di Mekar Indonesia" />
         <Spacer />
         <Header primaryText="Syarat dan Ketentuan" />
         <Spacer />

@@ -55,9 +55,9 @@ export default class Html extends Component {
           <link rel="manifest" href="/manifest.json" />
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
-          <meta name="application-name" content="Pinjam.co.id" />
+          <meta name="application-name" content="Mekar.co.id" />
           <meta name="apple-mobile-web-app-status-bar-style" content="#ED402F" />
-          <meta name="apple-mobile-web-app-title" content="Pinjam.co.id" />
+          <meta name="apple-mobile-web-app-title" content="Mekar.co.id" />
           <meta name="theme-color" content="#ED402F" />
 
           {/* (will be present only in development mode) */}

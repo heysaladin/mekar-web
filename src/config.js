@@ -25,22 +25,22 @@ module.exports = Object.assign({
   appPinjamKontrak: configEnvironment.PINJAM_KONTRAK,
   appBaseUrl: configEnvironment.BASEURL,
   app: {
-    title: 'Pinjam Mainsite',
-    description: 'Website for Pinjam.co.id',
-    copyright: '© 2017 Gadai Pinjam Indonesia',
+    title: 'Mekar Mainsite',
+    description: 'Website for Mekar.co.id',
+    copyright: '© 2017 Mekar Generator',
     head: {
-      titleTemplate: '%s | Pinjam Mainsite',
+      titleTemplate: '%s | Mekar Mainsite',
       meta: [
-        { name: 'description', content: 'Website for Pinjam.co.id' },
+        { name: 'description', content: 'Website for Mekar.co.id' },
         { charset: 'utf-8' },
         { property: 'og:site_name', content: 'React Redux Example' },
-        { property: 'og:image', content: 'https://pinjam.co.id/favicon.ico' },
+        { property: 'og:image', content: 'https://mekar.co.id/favicon.ico' },
         { property: 'og:locale', content: 'id_ID' },
-        { property: 'og:title', content: 'Pinjam Mainsite' },
-        { property: 'og:description', content: 'Website for Pinjam.co.id' },
+        { property: 'og:title', content: 'Mekar Mainsite' },
+        { property: 'og:description', content: 'Website for Mekar.co.id' },
         { property: 'og:card', content: 'summary' },
-        { property: 'og:site', content: '@pinjamindonesia' },
-        { property: 'og:creator', content: 'Pinjam Dev' },
+        { property: 'og:site', content: '@mekarindonesia' },
+        { property: 'og:creator', content: 'Mekar Dev' },
         { property: 'og:image:width', content: '200' },
         { property: 'og:image:height', content: '200' }
       ]
@@ -48,17 +48,17 @@ module.exports = Object.assign({
     social: {
       facebook: {
         name: 'Facebook',
-        url: 'https://www.facebook.com/Pinjam.ID',
+        url: 'https://www.facebook.com/Mekar.ID',
         sharerUrl: 'https://facebook.com/sharer.php'
       },
       instagram: {
         name: 'Instagram',
-        url: 'https://www.instagram.com/pinjamindonesia'
+        url: 'https://www.instagram.com/mekarindonesia'
       },
       twitter: {
         name: 'Twitter',
-        url: 'https://twitter.com/pinjamindonesia',
-        username: 'pinjamindonesia',
+        url: 'https://twitter.com/mekarindonesia',
+        username: 'mekarindonesia',
         sharerUrl: 'https://twitter.com/intent/tweet'
       },
       youtube: {
@@ -67,10 +67,10 @@ module.exports = Object.assign({
       }
     },
     hotline: {
-      url: 'https://pinjam.co.id',
+      url: 'https://mekar.co.id',
       email: {
-        label: 'cs@pinjam.co.id',
-        value: 'cs@pinjam.co.id'
+        label: 'cs@mekar.co.id',
+        value: 'cs@mekar.co.id'
       },
       phone: {
         label: '021 2750 6800',
@@ -78,9 +78,9 @@ module.exports = Object.assign({
       }
     },
     carrier: {
-      to: 'careers@pinjam.co.id',
-      cc: 'febri@pinjam.co.id',
-      subject: '[Karier Pinjam.co.id] ',
+      to: 'careers@mekar.co.id',
+      cc: 'febri@mekar.co.id',
+      subject: '[Karier Mekar.co.id] ',
       body: 'Sisipkan CV dan Tulis lamaran Anda disini'
     }
   }

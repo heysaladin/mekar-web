@@ -81,7 +81,7 @@ export default class Register extends Component {
           <Card style={styles.card}>
             <Content>
               <div className={classes.wrap}>
-                <h3 className={classes.fontTitle}>Selamat datang di Pinjam Indonesia</h3>
+                <h3 className={classes.fontTitle}>Selamat datang di Mekar Indonesia</h3>
 
                 <RegisterForm onSubmit={this.register} initialValues={this.getInitialValues()} />
 

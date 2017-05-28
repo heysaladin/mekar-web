@@ -3,37 +3,31 @@ import React, {
     PropTypes
 } from 'react';
 import Helmet from 'react-helmet';
-// import View from 'react-flexbox';
-// import {
-//     Link
-// } from 'react-router';
 import {
     Card,
     CardHeader
 } from 'material-ui/Card';
-// import RaisedButton from 'material-ui/RaisedButton';
-// import MdEmail from 'react-icons/lib/md/email';
-// import MdLocalPhone from 'react-icons/lib/md/local-phone';
-// import MdDateRange from 'react-icons/lib/md/date-range';
-// import MdHome from 'react-icons/lib/md/home';
-// import Avatar from 'material-ui/Avatar';
-// import MdAccountCircle from 'react-icons/lib/md/account-circle';
-// import {
-//     currency,
-//     date
-// } from 'utils/filter';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import {
     connect
 } from 'react-redux';
-// import {
-//     asyncConnect
-// } from 'redux-async-connect';
-// import * as profileActions from 'redux/modules/membership/profile/profile';
-// import {
-//     // isLoaded,
-//     load as loadProfile
-// } from 'redux/modules/membership/profile/profile';
 import injectSheet from 'react-jss';
+import Dialog from 'material-ui/Dialog';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import {
+  MdClose
+} from 'react-icons/lib/md';
+// import ReactDOM from 'react-dom';
+
+import { reduxForm,
+  Field,
+  propTypes } from 'redux-form';
+import { TextField } from 'redux-form-material-ui';
+
+import { number, letter } from 'utils/masking';
 
 import listPartners from 'data/branch.json';
 
@@ -45,27 +39,15 @@ import {
     Container,
     Content,
     Spacer,
-    // Button
+    Button,
+    Link
 } from '../../UI';
+
+import registerValidation from './registerValidation';
 
 import styles from './profileStyles';
 @injectSheet(styles)
 
-// @asyncConnect([{
-//   deferred: true,
-//   promise: ({
-//       store: {
-//           dispatch,
-//           // getState
-//       }
-//   }) => {
-//     // const state = getState();
-//     dispatch(loadProfile({
-//       // state.auth.identity.id
-//       userId: 21453
-//     }));
-//   }
-// }])
 @connect(state => {
   const profileData = {
     data: {
@@ -104,19 +86,22 @@ import styles from './profileStyles';
   // ...profileActions
 })
 
+@reduxForm({ form: 'register', validate: registerValidation })
+
 export default class Dashboard extends Component {
 
   static propTypes = {
+    location: PropTypes.object.isRequired,
     sheet: PropTypes.object.isRequired,
-    // get: PropTypes.object.isRequired,
-    // loading: PropTypes.bool.isRequired,
-    // profile: PropTypes.object.isRequired,
-    // identity: PropTypes.number.isRequired,
+    register: PropTypes.func.isRequired,
+    notifSend: PropTypes.func.isRequired,
+    ...propTypes
   }
 
-  state = {
-    branchPartnersState: listPartners.branchs,
-    appraisalHistories: []
+  constructor(props) {
+    super(props);
+    this.state = { open: false, dialogOpen: false, openEdit: false, branchPartnersState: listPartners.branchs, appraisalHistories: [], formShow: false };
+    this.handleToggleEditForm = this.handleToggleEditForm.bind(this);
   }
 
   /**
@@ -140,6 +125,17 @@ export default class Dashboard extends Component {
         this.setState({ branchPartnersState: listPartners.branchs });
       }
     }, 100);
+  }
+
+  /**
+   * Cek apakah sedang dalam keadaan oauth / tidak
+   *
+   * @returns {boolean}
+   * @memberOf Register
+   */
+  getInitialValues = () => {
+    const { location } = this.props;
+    return location.state && location.state.oauth;
   }
 
   /**
@@ -167,37 +163,107 @@ export default class Dashboard extends Component {
     return partners;
   }
 
+  // register = data => this.successRegister(data);
+  /**
+   * Handle registrasi
+   *
+   * @param {object} data - Berisi username, password, dan rememberme
+   * @return {Promise<data>}
+   * @memberOf Register
+   */
+  register = (data: {message: string, user_id: string}) => this.props.register(data).then(this.successRegister);
+
+  /**
+   * Handle sukses setelah login
+   *
+   * @param {object} result - Berisi info callbacks dari @function register
+   * @return {object}
+   * @memberOf Register
+   */
+  successRegister = (result: {message: string, user_id: string}) => {
+    console.log('register done');
+    this
+      .props
+      .notifSend({ message: 'You\'r now registered !', kind: 'success' });
+    return result;
+  }
+
+  handleToggle = () => this.setState({ open: !this.state.open });
+
+  handleDialogOpen = () => {
+    this.setState({ dialogOpen: true });
+  };
+
+  handleDialogClose = () => {
+    this.setState({ dialogOpen: false });
+  };
+
+  handleToggleEditForm = (id) => {
+    /*
+    if (this.state.formShow === false) {
+      const element = (
+        <div style={styles.formEditWrapper}>
+          <h1>Edit Data</h1>
+        </div>
+      );
+      ReactDOM.render(
+        element,
+        document.getElementById(`item${id}`)
+      );
+      this.setState({
+        formShow: true
+      });
+    } else {
+      const element = (
+        <span></span>
+      );
+      ReactDOM.render(
+        element,
+        document.getElementById(`item${id}`)
+      );
+      this.setState({
+        formShow: false
+      });
+      */
+
+    this.setState({ openEdit: !this.state.openEdit });
+    console.log(id);
+  }
+
   render() {
-    // const {
-    //   // profile,
-    //   // loading,
-    //   // identity
-    // } = this.props;
     const { sheet: {
         classes
-      } } = this.props;
+      }, handleSubmit, submitting } = this.props;
 
-    // let userProfile = {};
-    // let userSummary = {};
-    // if (profile) {
-    //   userProfile = profile.data.profile;
-    //   // userSummary = profile.data.summary;
-    //   userSummary = {
-    //     total: '',
-    //     totalLoan: '0',
-    //     totalPawn: '0'
-    //   };
-    // }
+    console.log(this.state.formShow);
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary
+        onTouchTap={this.handleDialogClose}
+      />,
+      <FlatButton
+        labelStyle={{ color: 'red' }}
+        label="Delete"
+        primary
+        keyboardFocused
+        onTouchTap={this.handleDialogClose}
+      />,
+    ];
 
     return (
       <div>
         <div className={classes.openingArea}></div>
         <Container>
-          <Helmet title="Profil" />
+          <Helmet title="Dashboard" />
           <Spacer />
           <Card style={styles.card}>
-            <CardHeader title="Dashboard" textStyle={styles.headerText} titleStyle={styles.headerTitle} style={styles.header} />
+            <CardHeader title="Dashboard" textStyle={styles.headerText} titleStyle={styles.headerTitle} style={styles.headerRight}>
+              <div className={classes.positionButton}><FlatButton style={styles.flatButton} labelStyle={styles.flatButtonLabel} label="Tampilkan Data Lain" primary onTouchTap={this.handleToggle} /></div>
+            </CardHeader>
             <Content className={classes.noPadding}>
+              <h1 className={classes.titleContent}>Some Title</h1>
               <div className={classes.wrap}>
                 <SearchBox onSearch={this.onSearch} />
                 <div>
@@ -215,8 +281,27 @@ export default class Dashboard extends Component {
                               </div>
                               <h4 className={classes.gridTitle}>{mitra.name}</h4>
                               <p className={classes.gridBodyCopy}>{mitra.telephone}</p>
+                              <div className={classes.blockAction}>
+                                <RaisedButton
+                                  label="Edit"
+                                  onTouchTap={() => this.handleToggleEditForm(mitra.id)}
+                                />
+                                <RaisedButton
+                                  labelStyle={styles.dangerText}
+                                  label="Delete"
+                                  onTouchTap={this.handleDialogOpen}
+                                />
+                              </div>
                             </div>
+                            {/* {this.state.formShow && <div style={{
+                              position: 'relative',
+                              paddingTop: 15,
+                              fontSize: 12,
+                              lineHeight: '12px',
+                              color: '#ED402F'
+                            }}>baru</div>}*/}
                           </div>
+                          <div id={`item${mitra.id}`}></div>
                         </div>
                         )
                     }
@@ -233,6 +318,81 @@ export default class Dashboard extends Component {
           </Card>
           <Spacer />
         </Container>
+        <Dialog
+          title="Anda yakin akan menghapus item ini?"
+          actions={actions}
+          modal={false}
+          open={this.state.dialogOpen}
+          onRequestClose={this.handleDialogClose}
+        >
+          Tekan 'Delete' untuk menghapus atau tekan 'Cancel' untuk membatalkan.
+        </Dialog>
+        <Drawer containerStyle={{ zIndex: 50 }} open={this.state.open}>
+          <IconButton
+            iconStyle={styles.buttonCloseIcon}
+            style={styles.buttonClose}
+            onTouchTap={this.handleToggle}>
+            <MdClose />
+          </IconButton>
+          <Spacer />
+          <Spacer />
+          <Spacer />
+          <MenuItem>Menu Item</MenuItem>
+          <MenuItem>Menu Item 2</MenuItem>
+        </Drawer>
+        <Drawer openSecondary containerStyle={this.state.openEdit ? { zIndex: 51, width: 'inherit' } : { zIndex: 51, width: 256 }} open={this.state.openEdit}>
+          <IconButton
+            iconStyle={styles.buttonCloseIcon}
+            style={styles.buttonClose}
+            onTouchTap={this.handleToggleEditForm}>
+            <MdClose />
+          </IconButton>
+          <Spacer />
+          <Spacer />
+          <Spacer />
+          <form onSubmit={handleSubmit} noValidate className={classes.formWrap}>
+            <div style={styles.textAlignLeft}>
+              <Field
+                name="name"
+                component={TextField}
+                floatingLabelText="Nama Lengkap"
+                normalize={letter}
+                fullWidth />
+              <Field
+                name="handphone"
+                type="tel"
+                component={TextField}
+                floatingLabelText="Nomor Handphone"
+                normalize={number}
+                fullWidth />
+              <Field
+                name="email"
+                type="email"
+                component={TextField}
+                floatingLabelText="Email"
+                fullWidth />
+              <Field
+                name="password"
+                type="password"
+                component={TextField}
+                floatingLabelText="Kata Sandi"
+                fullWidth />
+            </div>
+
+            <Spacer />
+            <Spacer />
+            <p>Dengan mendaftar sebagai anggota berarti Anda menerima &nbsp;<br />
+              <Link to="/bantuan/syarat-ketentuan" target="_blank">Syarat & Ketentuan</Link>
+            </p>
+            <Spacer />
+            <Button
+              id="signup-submit"
+              label="Daftar"
+              type="submit"
+              submitting={submitting}
+              secondary />
+          </form>
+        </Drawer>
       </div>
     );
   }
