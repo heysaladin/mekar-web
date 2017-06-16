@@ -57,6 +57,9 @@ export default store => {
           path="inner"
           getComponent={() => System.import('./containers/Public/Inner/Inner')} />
         <Route
+          path="details/:id"
+          getComponent={() => System.import('./containers/Public/Details/Details')} />
+        <Route
           path="profile"
           getComponent={() => System.import('./containers/Public/Dashboard/Profile')} />
         <Route

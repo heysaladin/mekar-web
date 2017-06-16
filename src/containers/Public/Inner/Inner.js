@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import injectSheet from 'react-jss';
 // import Card from 'material-ui/Card/Card';
+import { Link } from 'react-router';
 
 import listPartners from 'data/branch.json';
 
@@ -252,15 +253,17 @@ export default class Inner extends Component {
                 .getPartners()
                 .map(
                   (mitra) => <div key={`mitra-${mitra.number}`} className={classes.gridItem}>
-                    <div className={classes.gridCard}>
-                      <div className={classes.gridContentWrapper}>
-                        <div className={classes.gridImageWrapper}>
-                          <img className={classes.gridImage} src={`${sampleImage}`} alt="Mekar" />
+                    <Link href={`/details/${mitra.id}`}>
+                      <div className={classes.gridCard}>
+                        <div className={classes.gridContentWrapper}>
+                          <div className={classes.gridImageWrapper}>
+                            <img className={classes.gridImage} src={`${sampleImage}`} alt="Mekar" />
+                          </div>
+                          <h4 className={classes.gridTitle}>{mitra.name}</h4>
+                          <p className={classes.gridBodyCopy}>{mitra.telephone}</p>
                         </div>
-                        <h4 className={classes.gridTitle}>{mitra.name}</h4>
-                        <p className={classes.gridBodyCopy}>{mitra.telephone}</p>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                   )
               }
