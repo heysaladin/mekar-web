@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import injectSheet from 'react-jss';
 // import { Link } from 'react-router';
-
+/*
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-async-connect';
 import * as appraisalHistoryActions from 'redux/modules/public/appraisalHistory';
@@ -14,10 +14,12 @@ import { load as loadAppraisalHistory } from 'redux/modules/public/appraisalHist
 import * as appraisalHistoriesActions from 'redux/modules/public/appraisalHistories';
 
 import { reduxForm } from 'redux-form';
-
+*/
+import { Link } from 'react-router';
+import { MdChevronLeft } from 'react-icons/lib/md';
 import listPartners from 'data/branch.json';
 
-// import sampleImage from './img/mekar.jpg';
+import sampleImage from './img/mekar.jpg';
 
 import { Container, Header, Spacer } from '../../UI';
 // import { Content } from '../../UI';
@@ -36,7 +38,7 @@ const styles = {
     display: 'block',
     width: 2,
     height: 25,
-    margin: '0 auto',
+    margin: '25px auto 0',
     background: '#6ec8ce',
     position: 'absolute',
     left: 0,
@@ -58,8 +60,8 @@ const styles = {
     margin: '8px 0'
   },
   gridCard: {
-    width: 280,
-    height: 212,
+    width: 640,
+    minHeight: 350,
     background: 'white',
     borderRadius: 8,
     boxShadow: '0 0 5px rgba(0,0,0,.25)',
@@ -97,9 +99,13 @@ const styles = {
     fontSize: 12,
     margin: '5px 0'
   },
+  buttonBack: {
+    color: 'white',
+    textDecoration: 'none'
+  },
   textCenter: Layout.textCenter
 };
-
+/*
 @asyncConnect([
   {
     deferred: true,
@@ -126,7 +132,7 @@ const styles = {
 })
 
 @reduxForm({ form: 'formAppraisalHistory', formKey: 'formAppraisalHistory' })
-
+*/
 @injectSheet(styles)
 
 export default class Details extends Component {
@@ -134,7 +140,7 @@ export default class Details extends Component {
     sheet: PropTypes.object.isRequired,
     // data: PropTypes.array.isRequired,
     // load: PropTypes.func.isRequired,
-    appraisalHistory: PropTypes.object.isRequired,
+    // appraisalHistory: PropTypes.object.isRequired,
     // appraisalHistories: PropTypes.object.isRequired,
     // error: PropTypes.string.isRequired,
     // loading: PropTypes.bool.isRequired,
@@ -145,19 +151,50 @@ export default class Details extends Component {
     appraisalHistories: []
   }
 
+  /**
+   * Mendapatkan data dari file data/branch.json dan merubah isinya menjadi array of object
+   *
+   * @returns {object}
+   * @memberOf PartnersAddress
+   */
+  getPartners = () => {
+    const partners = [];
+    let idx = 0;
+
+    const url = window.location.pathname;
+    const splitUrl = url.split('/');
+    const lastSegment = splitUrl[splitUrl.length - 1];
+
+    this
+      .state
+      .branchPartnersState
+      .map((branch) => {
+        if (branch.visible !== false && branch.id === parseInt(lastSegment, 10)) {
+          console.log(lastSegment);
+          console.log(branch.id);
+          ++idx;
+          branch.number = idx;
+          partners.push(branch);
+        }
+        return branch;
+      });
+
+    return partners;
+  }
+
   render() {
     const {
         sheet: {
             classes
         },
         // appraisalHistories,
-        appraisalHistory,
+        // appraisalHistory,
     } = this.props;
 
-    let appraisal = {};
-    if (appraisalHistory) {
-      appraisal = appraisalHistory.data;
-    }
+    // let appraisal = {};
+    // if (appraisalHistory) {
+    //   appraisal = appraisalHistory.data;
+    // }
 
     // let appraisals = [];
     // if (appraisalHistories) {
@@ -175,11 +212,37 @@ export default class Details extends Component {
             title="Some Title of Details" />
           <Spacer />
           <Header primaryText="Some Title of Details" />
+          <span className={classes.verticalLine}></span>
           <div>
-            {appraisal.photos && appraisal.photos.length > 0 && <div>
-              <h2>{ appraisal.id }</h2>
+            <div style={styles.buttonBack}>
+              <Link style={styles.buttonBack} to="/inner"><MdChevronLeft />Kembali</Link>
             </div>
-            }
+            {this
+            .getPartners()
+            .length > 0 && <div className={classes.listWrapper}>
+              {this
+                .getPartners()
+                .map(
+                  (mitra) => <div key={`mitra-${mitra.number}`} className={classes.gridItem}>
+                    <div className={classes.gridCard}>
+                      <div className={classes.gridContentWrapper}>
+                        <div className={classes.gridImageWrapper}>
+                          <img className={classes.gridImage} src={`${sampleImage}`} alt="Mekar" />
+                        </div>
+                        <h4 className={classes.gridTitle}>{mitra.name}</h4>
+                        <p className={classes.gridBodyCopy}>{mitra.telephone}</p>
+                      </div>
+                    </div>
+                  </div>
+                  )
+              }
+            </div>}
+            {/* {this
+              .getPartners()
+              .length === 0 && <Content className={classes.textCenter}>
+                <h4>Nama toko atau alamat yang Anda cari belum ada.<br /> Mohon cari dengan kata kunci lain</h4>
+              </Content>
+            }*/}
           </div>
           <Spacer />
         </Container>

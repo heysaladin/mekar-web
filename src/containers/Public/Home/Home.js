@@ -47,12 +47,22 @@ const styles = {
     textAlign: 'center',
     color: 'white',
     margin: '5px 0',
-    fontSize: 40
+    fontSize: 40,
+    background: '-webkit-linear-gradient(left top, #8fefff, #80d056)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent'
   },
+  // mainText:':after' {
+  //   textShadow: '2px 2px 2px rgba(0,0,0,.5)'
+  // },
+
   mainBodyCopy: {
     textAlign: 'center',
     color: 'white',
-    margin: '10px 0'
+    margin: '10px 0',
+    background: '-webkit-linear-gradient(left top, #8fefff, #80d056)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent'
   },
   whiteBoard: {
     width: '90%',
