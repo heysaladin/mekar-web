@@ -5,6 +5,8 @@ import { reducer as form } from 'redux-form';
 import auth from './modules/auth';
 import notifs from './modules/notifs';
 import info from './modules/info';
+import branchs from './modules/public/repository';
+import appraisalHistories from './modules/public/appraisalHistories';
 
 export default function createReducers(asyncReducers) {
   return {
@@ -15,6 +17,8 @@ export default function createReducers(asyncReducers) {
     notifs,
     auth,
     info,
+    branchs,
+    appraisalHistories,
     ...asyncReducers
   };
 }

@@ -59,8 +59,9 @@ const styles = {
     const promises = [];
 
     if (!isAuthLoaded(getState())) {
-      promises.push(dispatch(loadAuth()));
+      // promises.push(dispatch(loadAuth()));
     }
+
     // if (!isInfoLoaded(getState())) {
     //   promises.push(dispatch(loadInfo()));
     // }

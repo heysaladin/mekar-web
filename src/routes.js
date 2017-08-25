@@ -9,7 +9,7 @@ import getRoutesUtils from 'utils/routes';
 if (typeof System.import === 'undefined') System.import = module => Promise.resolve(require(module));
 
 export default store => {
-  const { permissionsComponent } = getRoutesUtils(store); //  injectReducerAndRender,
+  const { injectReducerAndRender, permissionsComponent } = getRoutesUtils(store); //  injectReducerAndRender,
 
   /* Permissions */
   const isAuthenticated = UserAuthWrapper({
@@ -55,7 +55,13 @@ export default store => {
         {/* Routes */}
         <Route
           path="inner"
-          getComponent={() => System.import('./containers/Public/Inner/Inner')} />
+          getComponent={() => injectReducerAndRender(
+            {
+              appraisalHistories: System.import('./redux/modules/public/appraisalHistories')
+            },
+            System.import('./containers/Public/Inner/Inner'))}
+          /* getComponent={() => System.import('./containers/Public/Inner/Inner')} */
+          />
         <Route
           path="details/:id"
           getComponent={() => System.import('./containers/Public/Details/Details')} />
@@ -65,6 +71,13 @@ export default store => {
         <Route
           path="dashboard"
           getComponent={() => System.import('./containers/Public/Dashboard/Dashboard')} />
+        <Route
+          path="riwayat-taksiran"
+          getComponent={() => injectReducerAndRender(
+            {
+              appraisalHistories: System.import('./redux/modules/public/appraisalHistories')
+            },
+            System.import('./containers/Public/AppraisalHistory/AppraisalHistory'))} />
         {/* <Route
           path="alamat-cabang-mitra"
           getComponent={() => System.import('./containers/Public/PartnersAddress/PartnersAddress')} />

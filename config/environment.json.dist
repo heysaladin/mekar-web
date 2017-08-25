@@ -1,7 +1,7 @@
 {
     "NODE_ENV": "development",
     "BASEURL": "http://webdev.pinjam.co.id:9090",
-    "SECRETKEY": "dop32d9834uruw3ipofhwh4fq4",
+    "SECRETKEY": "siduh2q73f3478gf08gf8q34fh347h",
     "APIHOST": "http://devapi.pinjam.co.id",
     "APIPORT": 4171,
     "APIPREFIX": "",

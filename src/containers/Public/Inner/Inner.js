@@ -5,17 +5,48 @@ import injectSheet from 'react-jss';
 // import Card from 'material-ui/Card/Card';
 import { Link } from 'react-router';
 
+// import injectSheet from 'react-jss';
+// import Card from 'material-ui/Card/Card';
+// import Helmet from 'react-helmet';
+// import Paper from 'material-ui/Paper';
+// import MenuItem from 'material-ui/MenuItem';
+
+import {
+  // Field,
+  reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
+import * as appraisalHistoriesActions from 'redux/modules/public/appraisalHistories';
+
+// import { connect } from 'react-redux';
+// import { asyncConnect } from 'redux-async-connect';
+// import * as branchActions from 'redux/modules/public/repository';
+// import { load as loadBranchs } from 'redux/modules/public/repository';
+
+
+import dataPawnSimulation from 'data/pawn/simulation.json';
+
 import listPartners from 'data/branch.json';
 
 import SearchBox from './SearchBox';
 
 import sampleImage from './img/mekar.jpg';
 
-import { Container, Header, Spacer } from '../../UI';
-import { Content } from '../../UI';
+// import SelectFieldWrapper from '../../UI/Form/SelectFieldWrapper';
+import { Container, Header,
+  // Content,
+  Spacer, Loader, Landing } from '../../UI';
+// import { Container, Header, Spacer } from '../../UI';
+// import { Content } from '../../UI';
 // import { Link } from '../../UI';
 
 import Layout from '../../App/Layout';
+
+// import AppraisalItem from '../AppraisalHistory/AppraisalItem/AppraisalItem';
+
+
+// Inisialiasi action
+// const { load: loadAppraisalHistories } = appraisalHistoriesActions;
 
 const styles = {
   openingArea: {
@@ -138,18 +169,120 @@ const listPartners = {
     lng: 106.816793
   }]
 };
+
 */
+
+// Inisialiasi action
+const { load: loadAppraisalHistories } = appraisalHistoriesActions;
+
 @injectSheet(styles)
 
+// @asyncConnect([{
+//   deferred: true,
+//   promise: ({
+//       store: {
+//           dispatch
+//       }
+//   }) => {
+//     return dispatch(loadBranchs());
+//   }
+// }])
+// @connect(state => {
+//   return ({
+//     identity: state.auth.identity,
+//     branchData: state.branchs.data,
+//     loading: state.branchs.loading,
+//     branchsError: state.branchs.branchsError
+//     // branchData: state.branchs,
+//     // loading: state.branchs,
+//     // branchsError: state.branchs
+//   });
+// }, {
+//   ...branchActions
+// })
+
+
+@asyncConnect([
+  {
+    deferred: true,
+    promise: ({ store: {
+        dispatch
+      } }) => {
+      const promises = [];
+
+      /**
+       * Request data riwayat taksiran
+       */
+      promises.push(dispatch(loadAppraisalHistories()));
+
+      return Promise.all(promises);
+    }
+  }
+])
+@connect(state => ({ appraisalHistories: state.appraisalHistories.data, loading: state.appraisalHistories.loading }), {
+  ...appraisalHistoriesActions
+})
+
+@reduxForm({ form: 'formAppraisalHistory', formKey: 'formAppraisalHistory' })
+
 export default class Inner extends Component {
+
+
   static propTypes = {
-    sheet: PropTypes.object.isRequired
+    sheet: PropTypes.object.isRequired,
+    load: PropTypes.func.isRequired,
+    appraisalHistories: PropTypes.object,
+    loading: PropTypes.bool
+  }
+
+  static defaultProps = {
+    appraisalHistories: null,
+    loading: false
   }
 
   state = {
+    category: 0, // Default ke opsi -> Semua
+    categories: dataPawnSimulation.categories,
+    name: null,
+    appraisalHistories: [],
     branchPartnersState: listPartners.branchs,
-    appraisalHistories: []
+      // appraisalHistories: []
   }
+
+  // static propTypes = {
+  //   sheet: PropTypes.object.isRequired
+  // }
+
+  // state = {
+  //   branchPartnersState: listPartners.branchs,
+  //   appraisalHistories: []
+  // }
+
+
+  componentWillMount = () => {
+    const { load } = this.props;
+    const { categories } = this.state;
+    const that = this;
+
+    // Tambah temporary category, untuk dapatkan semua katergori
+    categories.unshift({ label: 'Semua', value: '0' });
+
+    setTimeout(() => {
+      load().then(result => {
+        that.setState({ categories, appraisalHistories: result });
+      });
+    }, 100);
+  }
+
+  componentWillUnmount = () => {
+    const { categories } = this.state;
+
+    // Buang temporary category
+    categories.shift();
+
+    this.setState({ categories });
+  }
+
 
   /**
    * Melakukan pengecekan teks setiap ada perubahan input pada inputText
@@ -199,7 +332,21 @@ export default class Inner extends Component {
     return partners;
   }
 
+  searchOnChange = (searchCategory: string) => {
+    const { name } = this.state;
+    const { load } = this.props;
+    const that = this;
+
+    setTimeout(() => {
+      that.setState({ category: searchCategory });
+      load({ name: { name }, category: searchCategory || 0 }).then(result => {
+        that.setState({ appraisalHistories: result });
+      });
+    }, 100);
+  }
+
   render() {
+    const { loading, appraisalHistories } = this.props;
     const { sheet: {
         classes
       } } = this.props;
@@ -213,6 +360,7 @@ export default class Inner extends Component {
                       href={`tel: ${mitra.telephone}`}>
                       {mitra.telephoneLabel}</Link>
                   </Content>*/
+    console.log(appraisalHistories.data);
     return (
       <div>
         <div className={classes.openingArea}></div>
@@ -223,6 +371,45 @@ export default class Inner extends Component {
           <Header primaryText="Some Title of List" />
           <SearchBox onSearch={this.onSearch} />
           <span className={classes.verticalLine}></span>
+
+          {/* <Card>
+            <Content className={classes.taksiran}>
+              {/* <SearchBox onSearch={this.onSearch} />
+
+              <Field
+                name="category"
+                component={SelectFieldWrapper}
+                onSelect={this.searchOnChange}
+                floatingLabelText="Kategori"a
+                fullWidth>
+                {dataPawnSimulation.categories.map((category) => <MenuItem
+                  key={`category-${category.label}`}
+                  value={category.value}
+                  primaryText={category.label} />
+                )}
+              </Field> * /}
+
+              {/* Tampilkan loader jika data sedang di load * /}
+              {loading && <Loader />}
+
+              {/* Tampil jika data kosong * /}
+              {(!appraisalHistories) && <Landing small>Belum ada informasi</Landing>}
+
+              <Spacer />
+
+              {/* Tampilan riwayat taksiran * /}
+              {!loading && appraisalHistories &&
+                <Paper zDepth={1}>
+                  {appraisalHistories.data.map((appraisal) =>
+                    <AppraisalItem key={`appraisal-${appraisal.id}`} data={appraisal} />)}
+                </Paper>
+              }
+
+              <Spacer />
+
+            </Content>
+          </Card> */}
+
           <div>
             {/* <div className={classes.gridItem}>
               <div className={classes.gridCard}>
@@ -246,6 +433,38 @@ export default class Inner extends Component {
                 </div>
               </div>
             </div>*/}
+
+            {/* Tampilkan loader jika data sedang di load */}
+            {loading && <Loader />}
+
+            {/* Tampil jika data kosong */}
+            {(!appraisalHistories) && <Landing small>Belum ada informasi</Landing>}
+
+            <Spacer />
+
+            {/* Tampilan riwayat taksiran */}
+            {!loading && appraisalHistories &&
+              <div className={classes.listWrapper} zDepth={1}>
+                {appraisalHistories.data.map(
+                  (mitra) => <div key={`mitra-${mitra.id}`} className={classes.gridItem}>
+                    <Link href={`/details/${mitra.id}`}>
+                      <div className={classes.gridCard}>
+                        <div className={classes.gridContentWrapper}>
+                          <div className={classes.gridImageWrapper}>
+                            <img className={classes.gridImage} src={`${sampleImage}`} alt="Mekar" />
+                          </div>
+                          <h4 className={classes.gridTitle}>{mitra.name}</h4>
+                          <p className={classes.gridBodyCopy}>{mitra.price}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                  )}
+              </div>
+            }
+
+            <Spacer />
+            {/*
             {this
             .getPartners()
             .length > 0 && <div className={classes.listWrapper}>
@@ -273,7 +492,7 @@ export default class Inner extends Component {
               .length === 0 && <Content className={classes.textCenter}>
                 <h4>Nama toko atau alamat yang Anda cari belum ada.<br /> Mohon cari dengan kata kunci lain</h4>
               </Content>
-            }
+            } */}
           </div>
           <Spacer />
         </Container>
