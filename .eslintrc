@@ -42,7 +42,8 @@
     "no-console": "off",
     "no-alert": "off",
     "max-len": ["error", 255],
-    "indent": ["error", 2, {"SwitchCase": 1}]
+    "indent": ["error", 2, {"SwitchCase": 1}],
+    "linebreak-style": 0
   },
   "plugins": [
     "react",

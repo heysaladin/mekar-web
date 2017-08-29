@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import favicon from 'serve-favicon';
@@ -27,6 +28,7 @@ process.setMaxListeners(0);
 const targetUrl = `http://${config.apiHost}:${config.apiPort}`;
 const pretty = new PrettyError();
 const app = express();
+app.use(cors());
 const server = new http.Server(app);
 const proxy = httpProxy.createProxyServer({
   target: targetUrl,

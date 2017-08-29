@@ -7,6 +7,7 @@ import notifs from './modules/notifs';
 import info from './modules/info';
 import branchs from './modules/public/repository';
 import appraisalHistories from './modules/public/appraisalHistories';
+import articles from './modules/public/articles';
 
 export default function createReducers(asyncReducers) {
   return {
@@ -19,6 +20,7 @@ export default function createReducers(asyncReducers) {
     info,
     branchs,
     appraisalHistories,
+    articles,
     ...asyncReducers
   };
 }

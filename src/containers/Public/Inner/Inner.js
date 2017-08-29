@@ -16,7 +16,7 @@ import {
   reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import * as appraisalHistoriesActions from 'redux/modules/public/appraisalHistories';
+import * as articlesActions from 'redux/modules/public/articles';
 
 // import { connect } from 'react-redux';
 // import { asyncConnect } from 'redux-async-connect';
@@ -173,7 +173,7 @@ const listPartners = {
 */
 
 // Inisialiasi action
-const { load: loadAppraisalHistories } = appraisalHistoriesActions;
+const { load: loadArticles } = articlesActions;
 
 @injectSheet(styles)
 
@@ -213,17 +213,17 @@ const { load: loadAppraisalHistories } = appraisalHistoriesActions;
       /**
        * Request data riwayat taksiran
        */
-      promises.push(dispatch(loadAppraisalHistories()));
+      promises.push(dispatch(loadArticles()));
 
       return Promise.all(promises);
     }
   }
 ])
-@connect(state => ({ appraisalHistories: state.appraisalHistories.data, loading: state.appraisalHistories.loading }), {
-  ...appraisalHistoriesActions
+@connect(state => ({ articlesData: state.articles.data, loading: state.articles.loading }), {
+  ...articlesActions
 })
 
-@reduxForm({ form: 'formAppraisalHistory', formKey: 'formAppraisalHistory' })
+@reduxForm({ form: 'formArticles', formKey: 'formArticles' })
 
 export default class Inner extends Component {
 
@@ -231,12 +231,12 @@ export default class Inner extends Component {
   static propTypes = {
     sheet: PropTypes.object.isRequired,
     load: PropTypes.func.isRequired,
-    appraisalHistories: PropTypes.object,
+    articlesData: PropTypes.object.isRequired,
     loading: PropTypes.bool
   }
 
   static defaultProps = {
-    appraisalHistories: null,
+    articlesData: null,
     loading: false
   }
 
@@ -244,9 +244,9 @@ export default class Inner extends Component {
     category: 0, // Default ke opsi -> Semua
     categories: dataPawnSimulation.categories,
     name: null,
-    appraisalHistories: [],
+    articles: [],
     branchPartnersState: listPartners.branchs,
-      // appraisalHistories: []
+      // articles: []
   }
 
   // static propTypes = {
@@ -269,9 +269,21 @@ export default class Inner extends Component {
 
     setTimeout(() => {
       load().then(result => {
-        that.setState({ categories, appraisalHistories: result });
+        that.setState({ categories, articles: result });
       });
     }, 100);
+  }
+
+  componentDidMount = () => {
+    const { articlesData } = this.props;
+    if (articlesData) {
+      console.log(articlesData);
+      this.setState({ articles: articlesData });
+    }
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({ articles: nextProps.articlesData });
   }
 
   componentWillUnmount = () => {
@@ -282,7 +294,6 @@ export default class Inner extends Component {
 
     this.setState({ categories });
   }
-
 
   /**
    * Melakukan pengecekan teks setiap ada perubahan input pada inputText
@@ -340,13 +351,13 @@ export default class Inner extends Component {
     setTimeout(() => {
       that.setState({ category: searchCategory });
       load({ name: { name }, category: searchCategory || 0 }).then(result => {
-        that.setState({ appraisalHistories: result });
+        that.setState({ articles: result });
       });
     }, 100);
   }
 
   render() {
-    const { loading, appraisalHistories } = this.props;
+    const { loading, articlesData } = this.props;
     const { sheet: {
         classes
       } } = this.props;
@@ -360,7 +371,12 @@ export default class Inner extends Component {
                       href={`tel: ${mitra.telephone}`}>
                       {mitra.telephoneLabel}</Link>
                   </Content>*/
-    console.log(appraisalHistories.data);
+    if (articlesData) {
+      console.log(articlesData);
+    }
+    const articlesCollection = this.state.articles;
+    console.log(articlesCollection);
+    // console.log(articles);
     return (
       <div>
         <div className={classes.openingArea}></div>
@@ -393,14 +409,14 @@ export default class Inner extends Component {
               {loading && <Loader />}
 
               {/* Tampil jika data kosong * /}
-              {(!appraisalHistories) && <Landing small>Belum ada informasi</Landing>}
+              {(!articles) && <Landing small>Belum ada informasi</Landing>}
 
               <Spacer />
 
               {/* Tampilan riwayat taksiran * /}
-              {!loading && appraisalHistories &&
+              {!loading && articles &&
                 <Paper zDepth={1}>
-                  {appraisalHistories.data.map((appraisal) =>
+                  {articles.data.map((appraisal) =>
                     <AppraisalItem key={`appraisal-${appraisal.id}`} data={appraisal} />)}
                 </Paper>
               }
@@ -438,23 +454,23 @@ export default class Inner extends Component {
             {loading && <Loader />}
 
             {/* Tampil jika data kosong */}
-            {(!appraisalHistories) && <Landing small>Belum ada informasi</Landing>}
+            {(!articlesCollection) && <Landing small>Belum ada informasi</Landing>}
 
             <Spacer />
 
             {/* Tampilan riwayat taksiran */}
-            {!loading && appraisalHistories &&
+            {!loading && articlesCollection &&
               <div className={classes.listWrapper} zDepth={1}>
-                {appraisalHistories.data.map(
-                  (mitra) => <div key={`mitra-${mitra.id}`} className={classes.gridItem}>
-                    <Link href={`/details/${mitra.id}`}>
+                {articlesCollection.map(
+                  (mitra) => <div key={`mitra-${mitra.articleId}`} className={classes.gridItem}>
+                    <Link href={`/details/${mitra.articleId}`}>
                       <div className={classes.gridCard}>
                         <div className={classes.gridContentWrapper}>
                           <div className={classes.gridImageWrapper}>
                             <img className={classes.gridImage} src={`${sampleImage}`} alt="Mekar" />
                           </div>
-                          <h4 className={classes.gridTitle}>{mitra.name}</h4>
-                          <p className={classes.gridBodyCopy}>{mitra.price}</p>
+                          <h4 className={classes.gridTitle}>{mitra.title}</h4>
+                          <p className={classes.gridBodyCopy}>{mitra.category}</p>
                         </div>
                       </div>
                     </Link>

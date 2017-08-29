@@ -57,7 +57,7 @@ export default store => {
           path="inner"
           getComponent={() => injectReducerAndRender(
             {
-              appraisalHistories: System.import('./redux/modules/public/appraisalHistories')
+              appraisalHistories: System.import('./redux/modules/public/articles')
             },
             System.import('./containers/Public/Inner/Inner'))}
           /* getComponent={() => System.import('./containers/Public/Inner/Inner')} */
