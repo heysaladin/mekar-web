@@ -216,6 +216,60 @@ export default class Inner extends Component {
     return partners;
   }
 
+
+  getLayout = () => {
+    const { articlesData } = this.props;
+
+
+    if (articlesData) {
+      console.log(articlesData);
+
+      let layoutSelected = false;
+
+
+      // let articlesCollection = [];
+      // let articlesCollectionNoImage = [];
+
+      articlesData.map(
+        (article) => {
+          console.log(article);
+          if (
+          this.filterDot(article.articleId) === '.' ||
+          this.filterDot(article.title) === '.' ||
+          this.filterDot(article.category) === '.'
+          ) {
+            console.log('punya gambar');
+            // articlesCollection = this.state.articles;
+            layoutSelected = true;
+          } else {
+            console.log('tidak punya gambar');
+            // articlesCollectionNoImage = this.state.articles;
+            layoutSelected = false;
+          }
+          return console.log('selesai');
+        });
+
+      // if (articlesCollectionNoImage.length > 0) {
+      //   layoutSelected = false;
+      // } else if (articlesCollection.length > 0) {
+      //   layoutSelected = true;
+      // }
+      console.log(layoutSelected);
+      return layoutSelected;
+    }
+    // console.log(articlesCollection);
+  }
+
+  filterDot = (param) => {
+    let valueDot = '';
+    if (typeof param === 'string') {
+      valueDot = (param.substr(param.length - 4)).charAt(0);
+    }
+    console.log(valueDot);
+    return valueDot;
+  };
+
+
   searchOnChange = (searchCategory) => {
     const { name } = this.state;
     const { load } = this.props;
@@ -230,15 +284,46 @@ export default class Inner extends Component {
   }
 
   render() {
-    const { loading, articlesData } = this.props;
+    const { loading,
+      // articlesData
+     } = this.props;
     const { sheet: {
         classes
       } } = this.props;
-    if (articlesData) {
-      console.log(articlesData);
+
+    // this.getLayout();
+
+    let articlesCollection;
+    let articlesCollectionNoImage;
+
+    if (this.getLayout() === false) {
+      articlesCollection = [];
+      articlesCollectionNoImage = this.state.articles;
+      setTimeout(() => {
+        console.log('articlesCollection');
+        console.log(articlesCollection);
+        console.log('articlesCollectionNoImage');
+        console.log(articlesCollectionNoImage);
+      }, 100);
+    } else if (this.getLayout() === true) {
+      articlesCollectionNoImage = [];
+      articlesCollection = this.state.articles;
+      setTimeout(() => {
+        console.log('articlesCollection');
+        console.log(articlesCollection);
+        console.log('articlesCollectionNoImage');
+        console.log(articlesCollectionNoImage);
+      }, 100);
     }
-    const articlesCollection = this.state.articles;
-    console.log(articlesCollection);
+
+    console.log(this.getLayout());
+
+    // const articlesCollection = this.state.articles;
+    // const articlesCollectionNoImage = this.state.articles;
+
+    // articlesCollection = this.state.articles;
+    // articlesCollectionNoImage = this.state.articles;
+
     return (
       <div>
         <div className={classes.openingArea}></div>
@@ -256,7 +341,7 @@ export default class Inner extends Component {
             {(!articlesCollection) && <Landing small>Belum ada informasi</Landing>}
             <Spacer />
             {/* Tampilan riwayat taksiran */}
-            {!loading && articlesCollection &&
+            {!loading && articlesCollection.length > 0 &&
               <div className={classes.listWrapper} zDepth={1}>
                 {articlesCollection.map(
                   (mitra) => <div key={`mitra-${mitra.articleId}`} className={classes.gridItem}>
@@ -265,6 +350,47 @@ export default class Inner extends Component {
                         <div className={classes.gridContentWrapper}>
                           <div className={classes.gridImageWrapper}>
                             <img className={classes.gridImage} src={`${sampleImage}`} alt="Mekar" />
+                          </div>
+                          <h4 className={classes.gridTitle}>{mitra.title}</h4>
+                          <p className={classes.gridBodyCopy}>{mitra.category}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                  )}
+              </div>
+            }
+            {!loading && articlesCollectionNoImage.length > 0 &&
+              <div className={classes.listWrapper} zDepth={1}>
+                {articlesCollectionNoImage.map(
+                  (mitra) => <div key={`mitra-${mitra.articleId}`} className={classes.gridItem}>
+                    <Link href={`/details/${mitra.articleId}`}>
+                      <div style={{
+                        width: 280,
+                        position: 'relative',
+                        background: 'white',
+                        boxShadow: '0 0 5px rgba(0,0,0,.25)',
+                        borderRadius: 8,
+                        minHeight: 65
+                      }}>
+                        <div style={{
+                          left: 0,
+                          width: 252,
+                          right: 0,
+                          position: 'absolute',
+                          margin: '0 auto'
+                        }}>
+                          <div style={{
+                            width: 252,
+                            overflow: 'hidden',
+                            borderRadius: 8
+                          }}>
+                            <img style={{
+                              width: 'auto',
+                              height: 'inherit',
+                              margin: '0 auto',
+                              display: 'none'
+                            }} src={`${sampleImage}`} alt="Mekar" />
                           </div>
                           <h4 className={classes.gridTitle}>{mitra.title}</h4>
                           <p className={classes.gridBodyCopy}>{mitra.category}</p>
