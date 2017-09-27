@@ -1,20 +1,36 @@
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import injectSheet from 'react-jss';
-import { Link } from 'react-router';
+import {
+  Link
+} from 'react-router';
 import {
   reduxForm
 } from 'redux-form';
-import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
+import {
+  connect
+} from 'react-redux';
+import {
+  asyncConnect
+} from 'redux-connect';
 import * as articlesActions from 'redux/modules/public/articles';
 import dataPawnSimulation from 'data/pawn/simulation.json';
 import listPartners from 'data/branch.json';
+
 import SearchBox from './SearchBox';
 import sampleImage from './img/mekar.jpg';
-import { Container, Header,
-  Spacer, Loader, Landing } from '../../UI';
+
+import {
+  Container,
+  Header,
+  Spacer,
+  Loader,
+  Landing,
+  Content
+} from '../../UI';
 import Layout from '../../App/Layout';
 
 const styles = {
@@ -107,7 +123,7 @@ const { load: loadArticles } = articlesActions;
       const promises = [];
 
       /**
-       * Request data riwayat taksiran
+       * Request data
        */
       promises.push(dispatch(loadArticles()));
 
@@ -154,7 +170,6 @@ export default class Inner extends Component {
   componentDidMount = () => {
     const { articlesData } = this.props;
     if (articlesData) {
-      console.log(articlesData);
       this.setState({ articles: articlesData });
     }
   }
@@ -163,7 +178,7 @@ export default class Inner extends Component {
   }
   componentWillUnmount = () => {
     const { categories } = this.state;
-    // Buang temporary category
+    // Buang temporary
     categories.shift();
     this.setState({ categories });
   }
@@ -178,17 +193,20 @@ export default class Inner extends Component {
    * @memberOf PartnersAddress
    */
   onSearch = (searchName) => {
-    setTimeout(() => {
-      const resultPartners = this.state.articles
-        .branchs
-        .filter(mitra => mitra.title.toLowerCase().includes(searchName.toLowerCase()) ||
-        mitra.category.toLowerCase().includes(searchName.toLowerCase()));
-      if (searchName !== '') {
-        this.setState({ articles: resultPartners });
-      } else {
-        this.setState({ articles: this.state.articles });
-      }
-    }, 100);
+    const { articlesData } = this.props;
+    if (articlesData) {
+      setTimeout(() => {
+        const resultPartners =
+        this.state.articles
+          .filter(mitra => mitra.title.toLowerCase().includes(searchName.toLowerCase())
+        );
+        if (searchName !== '') {
+          this.setState({ articles: resultPartners });
+        } else {
+          this.setState({ articles: articlesData });
+        }
+      }, 100);
+    }
   }
 
   /**
@@ -222,42 +240,22 @@ export default class Inner extends Component {
 
 
     if (articlesData) {
-      console.log(articlesData);
-
       let layoutSelected = false;
-
-
-      // let articlesCollection = [];
-      // let articlesCollectionNoImage = [];
-
       articlesData.map(
         (article) => {
-          console.log(article);
           if (
           this.filterDot(article.articleId) === '.' ||
           this.filterDot(article.title) === '.' ||
           this.filterDot(article.category) === '.'
           ) {
-            console.log('punya gambar');
-            // articlesCollection = this.state.articles;
             layoutSelected = true;
           } else {
-            console.log('tidak punya gambar');
-            // articlesCollectionNoImage = this.state.articles;
             layoutSelected = false;
           }
           return console.log('selesai');
         });
-
-      // if (articlesCollectionNoImage.length > 0) {
-      //   layoutSelected = false;
-      // } else if (articlesCollection.length > 0) {
-      //   layoutSelected = true;
-      // }
-      console.log(layoutSelected);
       return layoutSelected;
     }
-    // console.log(articlesCollection);
   }
 
   filterDot = (param) => {
@@ -265,7 +263,6 @@ export default class Inner extends Component {
     if (typeof param === 'string') {
       valueDot = (param.substr(param.length - 4)).charAt(0);
     }
-    console.log(valueDot);
     return valueDot;
   };
 
@@ -285,13 +282,10 @@ export default class Inner extends Component {
 
   render() {
     const { loading,
-      // articlesData
      } = this.props;
     const { sheet: {
         classes
       } } = this.props;
-
-    // this.getLayout();
 
     let articlesCollection;
     let articlesCollectionNoImage;
@@ -299,30 +293,10 @@ export default class Inner extends Component {
     if (this.getLayout() === false) {
       articlesCollection = [];
       articlesCollectionNoImage = this.state.articles;
-      setTimeout(() => {
-        console.log('articlesCollection');
-        console.log(articlesCollection);
-        console.log('articlesCollectionNoImage');
-        console.log(articlesCollectionNoImage);
-      }, 100);
     } else if (this.getLayout() === true) {
       articlesCollectionNoImage = [];
       articlesCollection = this.state.articles;
-      setTimeout(() => {
-        console.log('articlesCollection');
-        console.log(articlesCollection);
-        console.log('articlesCollectionNoImage');
-        console.log(articlesCollectionNoImage);
-      }, 100);
     }
-
-    console.log(this.getLayout());
-
-    // const articlesCollection = this.state.articles;
-    // const articlesCollectionNoImage = this.state.articles;
-
-    // articlesCollection = this.state.articles;
-    // articlesCollectionNoImage = this.state.articles;
 
     return (
       <div>
@@ -359,6 +333,10 @@ export default class Inner extends Component {
                   </div>
                   )}
               </div>
+            }
+            {!loading && articlesCollection.length === 0 && <Content style={Layout.textCenter}>
+              <h4 style={{ display: 'block', textAlign: 'center' }}>Nama toko atau alamat yang Anda cari belum ada.<br /> Mohon cari dengan kata kunci lain</h4>
+            </Content>
             }
             {!loading && articlesCollectionNoImage.length > 0 &&
               <div className={classes.listWrapper} zDepth={1}>
@@ -399,6 +377,10 @@ export default class Inner extends Component {
                     </Link>
                   </div>
                   )}
+                  {!loading && articlesCollectionNoImage.length === 0 && <Content style={Layout.textCenter}>
+                    <h4 style={{ display: 'block', textAlign: 'center' }}>Nama toko atau alamat yang Anda cari belum ada.<br /> Mohon cari dengan kata kunci lain</h4>
+                  </Content>
+                  }
               </div>
             }
             <Spacer />

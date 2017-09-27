@@ -1,29 +1,35 @@
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import injectSheet from 'react-jss';
-// import { Link } from 'react-router';
-/*
-import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-async-connect';
-import * as appraisalHistoryActions from 'redux/modules/public/appraisalHistory';
-import { load as loadAppraisalHistory } from 'redux/modules/public/appraisalHistory';
-// import * as summaryActions from 'redux/modules/public/summary';
-// import {loadSummary} from 'redux/modules/public/summary';
-
-import * as appraisalHistoriesActions from 'redux/modules/public/appraisalHistories';
-
-import { reduxForm } from 'redux-form';
-*/
-import { Link } from 'react-router';
-import { MdChevronLeft } from 'react-icons/lib/md';
+import {
+  Link
+} from 'react-router';
+import {
+  MdChevronLeft
+} from 'react-icons/lib/md';
+import {
+  reduxForm
+} from 'redux-form';
+import {
+  connect
+} from 'react-redux';
+import {
+  asyncConnect
+} from 'redux-connect';
+import * as articlesActions from 'redux/modules/public/articles';
+// import dataPawnSimulation from 'data/pawn/simulation.json';
 import listPartners from 'data/branch.json';
 
 import sampleImage from './img/mekar.jpg';
 
-import { Container, Header, Spacer } from '../../UI';
-// import { Content } from '../../UI';
-
+import {
+  Container,
+  Header,
+  Spacer
+} from '../../UI';
 import Layout from '../../App/Layout';
 
 const styles = {
@@ -105,45 +111,40 @@ const styles = {
   },
   textCenter: Layout.textCenter
 };
-/*
+
+// Inisialiasi action
+const { load: loadArticles } = articlesActions;
+
+@injectSheet(styles)
+
 @asyncConnect([
   {
     deferred: true,
-    promise: ({ params, store: {
+    promise: ({ store: {
         dispatch
       } }) => {
       const promises = [];
-      promises.push(dispatch(loadAppraisalHistory(params)));
-      // promises.push(dispatch(loadSummary()));
+
+      /**
+       * Request data
+       */
+      promises.push(dispatch(loadArticles()));
 
       return Promise.all(promises);
     }
   }
 ])
-@connect(state => ({
-  appraisalHistories: state.appraisalHistories.data,
-  appraisalHistory: state.appraisalHistory.data,
-  // summary: state.summary.data,
-  loading: state.appraisalHistories.loading
-}), {
-  ...appraisalHistoryActions,
-  // ...summaryActions,
-  ...appraisalHistoriesActions
+@connect(state => ({ articlesData: state.articles.data, loading: state.articles.loading }), {
+  ...articlesActions
 })
 
-@reduxForm({ form: 'formAppraisalHistory', formKey: 'formAppraisalHistory' })
-*/
-@injectSheet(styles)
+@reduxForm({ form: 'formArticles', formKey: 'formArticles' })
 
 export default class Details extends Component {
   static propTypes = {
     sheet: PropTypes.object.isRequired,
-    // data: PropTypes.array.isRequired,
-    // load: PropTypes.func.isRequired,
-    // appraisalHistory: PropTypes.object.isRequired,
-    // appraisalHistories: PropTypes.object.isRequired,
-    // error: PropTypes.string.isRequired,
-    // loading: PropTypes.bool.isRequired,
+    articlesData: PropTypes.object.isRequired,
+    // loading: PropTypes.bool
   }
 
   state = {
@@ -158,6 +159,7 @@ export default class Details extends Component {
    * @memberOf PartnersAddress
    */
   getPartners = () => {
+    const { articlesData } = this.props;
     const partners = [];
     let idx = 0;
 
@@ -165,13 +167,12 @@ export default class Details extends Component {
     const splitUrl = url.split('/');
     const lastSegment = splitUrl[splitUrl.length - 1];
 
-    this
-      .state
-      .branchPartnersState
+    articlesData
       .map((branch) => {
-        if (branch.visible !== false && branch.id === parseInt(lastSegment, 10)) {
-          console.log(lastSegment);
-          console.log(branch.id);
+        if (
+          branch.articleId === parseInt(lastSegment, 10)) {
+          // console.log(lastSegment);
+          // console.log(branch.articleId);
           ++idx;
           branch.number = idx;
           partners.push(branch);
@@ -187,23 +188,8 @@ export default class Details extends Component {
         sheet: {
             classes
         },
-        // appraisalHistories,
-        // appraisalHistory,
     } = this.props;
 
-    // let appraisal = {};
-    // if (appraisalHistory) {
-    //   appraisal = appraisalHistory.data;
-    // }
-
-    // let appraisals = [];
-    // if (appraisalHistories) {
-    //   if (this.state.appraisalSearch === true) {
-    //     appraisals = appraisalHistories.data;
-    //   } else {
-    //     appraisals = [];
-    //   }
-    // }
     return (
       <div>
         <div className={classes.openingArea}></div>
@@ -229,20 +215,15 @@ export default class Details extends Component {
                         <div className={classes.gridImageWrapper}>
                           <img className={classes.gridImage} src={`${sampleImage}`} alt="Mekar" />
                         </div>
-                        <h4 className={classes.gridTitle}>{mitra.name}</h4>
-                        <p className={classes.gridBodyCopy}>{mitra.telephone}</p>
+                        <h4 className={classes.gridTitle}>{mitra.title}</h4>
+                        <p className={classes.gridBodyCopy}>{mitra.category}</p>
                       </div>
                     </div>
                   </div>
                   )
               }
-            </div>}
-            {/* {this
-              .getPartners()
-              .length === 0 && <Content className={classes.textCenter}>
-                <h4>Nama toko atau alamat yang Anda cari belum ada.<br /> Mohon cari dengan kata kunci lain</h4>
-              </Content>
-            }*/}
+            </div>
+            }
           </div>
           <Spacer />
         </Container>

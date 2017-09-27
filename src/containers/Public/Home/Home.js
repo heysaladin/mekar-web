@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import injectSheet from 'react-jss';
-// import Card from 'material-ui/Card/Card';
-// import CardMedia from 'material-ui/Card/CardMedia';
-// import CardTitle from 'material-ui/Card/CardTitle';
-
-// import { connect } from 'react-redux';
-// import config from 'config';
-
-import { Container, Spacer } from '../../UI'; // Content,
 
 import decorator from './decorator.png';
 import illustrationClassdiagram from './illustration-1-classdiagram.png';
@@ -18,6 +12,11 @@ import illustrationWebapp from './illustration-2-webapp.png';
 import featureQuick from './icon-feature-1-quick.png';
 import featureModular from './icon-feature-2-modular.png';
 import featureScalable from './icon-feature-3-scalable.png';
+
+import {
+  Container,
+  Spacer
+} from '../../UI';
 
 const styles = {
   openingArea: {
@@ -52,9 +51,6 @@ const styles = {
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent'
   },
-  // mainText:':after' {
-  //   textShadow: '2px 2px 2px rgba(0,0,0,.5)'
-  // },
 
   mainBodyCopy: {
     textAlign: 'center',
@@ -202,11 +198,10 @@ const styles = {
 };
 
 @injectSheet(styles)
-// @connect(state => ({ online: state.online }))
+
 export default class Home extends Component {
 
   static propTypes = {
-    // online: PropTypes.bool.isRequired,
     sheet: PropTypes.object.isRequired
   };
 
@@ -235,32 +230,6 @@ export default class Home extends Component {
         <Container className={classes.mainContent}>
           <Helmet title="Beranda" />
           <Spacer />
-          {/* <Card>
-            <CardMedia
-              overlay={<CardTitle title={config.app.title} subtitle={config.app.description} />}>
-              <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/CY0BG49341.jpg" alt="girl-learn" />
-            </CardMedia>
-            <Content>
-              This project is used as the foundation for all frontend based on web.
-              Contains sample layouts, custom components, code standardization,
-              and examples of cases that are often used (CRUD, etc).
-              <br />
-              <br />
-              It could also be a reference for QA and UI / UX Designer
-              in order to ensure the design and user interface can be in deployments (on functionality/compatibility).
-              <br />
-              <br />
-              If there are additional, bugs, etc, please contact us.
-              <br />
-              <br />
-              <br />
-              regards,
-              <br />
-              <br />
-              <strong>Mekar's Front End Team</strong>
-            </Content>
-          </Card>*/}
-
           <Spacer />
           <div className={classes.contentWrapper}>
             <h4 className={classes.contentText}>Create web applications that are modular and have high scalability in a short time</h4>

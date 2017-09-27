@@ -20,7 +20,6 @@ import IconButton from 'material-ui/IconButton';
 import {
   MdClose
 } from 'react-icons/lib/md';
-// import ReactDOM from 'react-dom';
 
 import { reduxForm,
   Field,
@@ -30,6 +29,11 @@ import { TextField } from 'redux-form-material-ui';
 import { number, letter } from 'utils/masking';
 
 import listPartners from 'data/branch.json';
+
+import {
+  asyncConnect
+} from 'redux-connect';
+import * as articlesActions from 'redux/modules/public/articles';
 
 import SearchBox from './SearchBox';
 
@@ -77,13 +81,10 @@ import styles from './profileStyles';
   };
   return ({
     identity: state.auth.identity,
-    // profile: state.profile.data,
     profile: profileData,
-    // loading: state.profile.loading
     loading: false
   });
 }, {
-  // ...profileActions
 })
 
 @reduxForm({ form: 'register', validate: registerValidation })
@@ -199,33 +200,6 @@ export default class Dashboard extends Component {
   };
 
   handleToggleEditForm = (id) => {
-    /*
-    if (this.state.formShow === false) {
-      const element = (
-        <div style={styles.formEditWrapper}>
-          <h1>Edit Data</h1>
-        </div>
-      );
-      ReactDOM.render(
-        element,
-        document.getElementById(`item${id}`)
-      );
-      this.setState({
-        formShow: true
-      });
-    } else {
-      const element = (
-        <span></span>
-      );
-      ReactDOM.render(
-        element,
-        document.getElementById(`item${id}`)
-      );
-      this.setState({
-        formShow: false
-      });
-      */
-
     this.setState({ openEdit: !this.state.openEdit });
     console.log(id);
   }
@@ -293,13 +267,6 @@ export default class Dashboard extends Component {
                                 />
                               </div>
                             </div>
-                            {/* {this.state.formShow && <div style={{
-                              position: 'relative',
-                              paddingTop: 15,
-                              fontSize: 12,
-                              lineHeight: '12px',
-                              color: '#ED402F'
-                            }}>baru</div>}*/}
                           </div>
                           <div id={`item${mitra.id}`}></div>
                         </div>
@@ -382,7 +349,7 @@ export default class Dashboard extends Component {
             <Spacer />
             <Spacer />
             <p>Dengan mendaftar sebagai anggota berarti Anda menerima &nbsp;<br />
-              <Link to="/bantuan/syarat-ketentuan" target="_blank">Syarat & Ketentuan</Link>
+              <Link to="/bantuan/syarat-ketentuan" target="_blank">Syarat &amp; Ketentuan</Link>
             </p>
             <Spacer />
             <Button

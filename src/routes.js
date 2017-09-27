@@ -64,13 +64,25 @@ export default store => {
           />
         <Route
           path="details/:id"
-          getComponent={() => System.import('./containers/Public/Details/Details')} />
+          getComponent={() => injectReducerAndRender(
+            {
+              appraisalHistories: System.import('./redux/modules/public/articles')
+            },
+            System.import('./containers/Public/Details/Details'))}
+          /* getComponent={() => System.import('./containers/Public/Details/Details')} */
+          />
         <Route
           path="profile"
           getComponent={() => System.import('./containers/Public/Dashboard/Profile')} />
         <Route
           path="dashboard"
-          getComponent={() => System.import('./containers/Public/Dashboard/Dashboard')} />
+          getComponent={() => injectReducerAndRender(
+            {
+              appraisalHistories: System.import('./redux/modules/public/articles')
+            },
+            System.import('./containers/Public/Dashboard/Dashboard'))}
+          /* getComponent={() => System.import('./containers/Public/Dashboard/Dashboard')} */
+          />
         <Route
           path="riwayat-taksiran"
           getComponent={() => injectReducerAndRender(
