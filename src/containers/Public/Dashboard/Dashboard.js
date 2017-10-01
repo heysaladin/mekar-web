@@ -23,7 +23,8 @@ import {
 
 import { reduxForm,
   Field,
-  propTypes } from 'redux-form';
+  // propTypes
+} from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 
 import { number, letter } from 'utils/masking';
@@ -34,6 +35,8 @@ import {
   asyncConnect
 } from 'redux-connect';
 import * as articlesActions from 'redux/modules/public/articles';
+import dataPawnSimulation from 'data/pawn/simulation.json';
+// import listPartners from 'data/branch.json';
 
 import SearchBox from './SearchBox';
 
@@ -44,65 +47,157 @@ import {
     Content,
     Spacer,
     Button,
-    Link
+    Link,
+    Loader,
+    Landing,
 } from '../../UI';
 
-import registerValidation from './registerValidation';
+// import registerValidation from './registerValidation';
 
 import styles from './profileStyles';
+// @injectSheet(styles)
+
+// @connect(state => {
+//   const profileData = {
+//     data: {
+//       profile: {
+//         accountName: 'Milan',
+//         accountNumber: '0987654321',
+//         address: 'Jalan Patra Kuningan X',
+//         addressById: 'Jalan Patra Kuningan XV',
+//         bank: '1',
+//         bankBranch: 'KPC Kuningan',
+//         birthday: '1995-2-9',
+//         birthplace: '190',
+//         city: '190',
+//         cityById: '190',
+//         code: 'P1700188',
+//         email: 'm.milan@gmail.com',
+//         gender: 'P',
+//         handphone: '085891550128',
+//         id: 21453,
+//         idCard: '1234567890',
+//         mothername: 'Upiek',
+//         name: 'Muhammad Milan',
+//         photoIDCard: 'https://s3-ap-southeast-1.amazonaws.com/image-static-pinjam/activities/21453/2017/03/15/b66bac28296847053c00e4894efb5830.jpg',
+//         photoProfile: 'https://s3-ap-southeast-1.amazonaws.com/image-static-pinjam/activities/21453/2017/03/15/a219fe78b36360de59e19b4fd072190d.jpg'
+//       }
+//     }
+//   };
+//   return ({
+//     identity: state.auth.identity,
+//     profile: profileData,
+//     loading: false
+//   });
+// }, {
+// })
+
+// @reduxForm({ form: 'register', validate: registerValidation })
+
+// Inisialiasi action
+const { load: loadArticles } = articlesActions;
+
 @injectSheet(styles)
 
-@connect(state => {
-  const profileData = {
-    data: {
-      profile: {
-        accountName: 'Milan',
-        accountNumber: '0987654321',
-        address: 'Jalan Patra Kuningan X',
-        addressById: 'Jalan Patra Kuningan XV',
-        bank: '1',
-        bankBranch: 'KPC Kuningan',
-        birthday: '1995-2-9',
-        birthplace: '190',
-        city: '190',
-        cityById: '190',
-        code: 'P1700188',
-        email: 'm.milan@gmail.com',
-        gender: 'P',
-        handphone: '085891550128',
-        id: 21453,
-        idCard: '1234567890',
-        mothername: 'Upiek',
-        name: 'Muhammad Milan',
-        photoIDCard: 'https://s3-ap-southeast-1.amazonaws.com/image-static-pinjam/activities/21453/2017/03/15/b66bac28296847053c00e4894efb5830.jpg',
-        photoProfile: 'https://s3-ap-southeast-1.amazonaws.com/image-static-pinjam/activities/21453/2017/03/15/a219fe78b36360de59e19b4fd072190d.jpg'
-      }
+@asyncConnect([
+  {
+    deferred: true,
+    promise: ({ store: {
+        dispatch
+      } }) => {
+      const promises = [];
+
+      /**
+       * Request data
+       */
+      promises.push(dispatch(loadArticles()));
+
+      return Promise.all(promises);
     }
-  };
-  return ({
-    identity: state.auth.identity,
-    profile: profileData,
-    loading: false
-  });
-}, {
+  }
+])
+@connect(state => ({ articlesData: state.articles.data, loading: state.articles.loading }), {
+  ...articlesActions
 })
 
-@reduxForm({ form: 'register', validate: registerValidation })
+@reduxForm({ form: 'formArticles', formKey: 'formArticles' })
+
 
 export default class Dashboard extends Component {
 
   static propTypes = {
-    location: PropTypes.object.isRequired,
     sheet: PropTypes.object.isRequired,
-    register: PropTypes.func.isRequired,
-    notifSend: PropTypes.func.isRequired,
-    ...propTypes
+    load: PropTypes.func.isRequired,
+    articlesData: PropTypes.object.isRequired,
+    loading: PropTypes.bool,
+  // }
+  // static propTypes = {
+    // location: PropTypes.object.isRequired,
+    // sheet: PropTypes.object.isRequired,
+    // register: PropTypes.func.isRequired,
+    // notifSend: PropTypes.func.isRequired,
+    // ...propTypes
+  }
+
+  static defaultProps = {
+    articlesData: null,
+    loading: false
   }
 
   constructor(props) {
     super(props);
-    this.state = { open: false, dialogOpen: false, openEdit: false, branchPartnersState: listPartners.branchs, appraisalHistories: [], formShow: false };
+    // this.state = {
+    //   open: false, dialogOpen: false, openEdit: false, branchPartnersState: listPartners.branchs, appraisalHistories: [], formShow: false
+    // };
     this.handleToggleEditForm = this.handleToggleEditForm.bind(this);
+  }
+
+  state = {
+    open: false,
+    dialogOpen: false,
+    openEdit: false,
+    branchPartnersState: listPartners.branchs,
+    appraisalHistories: [],
+    formShow: false,
+    category: 0, // Default ke opsi -> Semua
+    categories: dataPawnSimulation.categories,
+    name: null,
+    articles: [],
+    // branchPartnersState: listPartners.branchs,
+  }
+
+  // -------------------------------
+  componentWillMount = () => {
+    const { load } = this.props;
+    const { categories } = this.state;
+    const that = this;
+    // Tambah temporary category, untuk dapatkan semua katergori
+    // categories.unshift({ label: 'Semua', value: '0' });
+    setTimeout(() => {
+      load().then(result => {
+        that.setState({
+          categories,
+          articles: result });
+      });
+    }, 100);
+  }
+  componentDidMount = () => {
+    const { articlesData } = this.props;
+    if (articlesData) {
+      this.setState({ articles: articlesData });
+    }
+  }
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({ articles: nextProps.articlesData });
+    setTimeout(() => {
+      console.log(this.state.articles);
+    }, 100);
+  }
+  componentWillUnmount = () => {
+    const { categories } = this.state;
+    // Buang temporary
+    // categories.shift();
+    this.setState({ categories });
   }
 
   /**
@@ -114,29 +209,21 @@ export default class Dashboard extends Component {
    * @returns {object}
    * @memberOf PartnersAddress
    */
-  onSearch = (searchName: string) => {
-    setTimeout(() => {
-      const resultPartners = listPartners
-        .branchs
-        .filter(mitra => mitra.name.toLowerCase().includes(searchName.toLowerCase()) ||
-        mitra.address.toLowerCase().includes(searchName.toLowerCase()));
-      if (searchName !== '') {
-        this.setState({ branchPartnersState: resultPartners });
-      } else {
-        this.setState({ branchPartnersState: listPartners.branchs });
-      }
-    }, 100);
-  }
-
-  /**
-   * Cek apakah sedang dalam keadaan oauth / tidak
-   *
-   * @returns {boolean}
-   * @memberOf Register
-   */
-  getInitialValues = () => {
-    const { location } = this.props;
-    return location.state && location.state.oauth;
+  onSearch = (searchName) => {
+    const { articlesData } = this.props;
+    if (articlesData) {
+      setTimeout(() => {
+        const resultPartners =
+        this.state.articles
+          .filter(mitra => mitra.title.toLowerCase().includes(searchName.toLowerCase())
+        );
+        if (searchName !== '') {
+          this.setState({ articles: resultPartners });
+        } else {
+          this.setState({ articles: articlesData });
+        }
+      }, 100);
+    }
   }
 
   /**
@@ -164,30 +251,137 @@ export default class Dashboard extends Component {
     return partners;
   }
 
-  // register = data => this.successRegister(data);
-  /**
-   * Handle registrasi
-   *
-   * @param {object} data - Berisi username, password, dan rememberme
-   * @return {Promise<data>}
-   * @memberOf Register
-   */
-  register = (data: {message: string, user_id: string}) => this.props.register(data).then(this.successRegister);
+
+  getLayout = () => {
+    const { articlesData } = this.props;
+
+
+    if (articlesData) {
+      let layoutSelected = false;
+      articlesData.map(
+        (article) => {
+          if (
+          this.filterDot(article.articleId) === '.' ||
+          this.filterDot(article.title) === '.' ||
+          this.filterDot(article.category) === '.'
+          ) {
+            layoutSelected = true;
+          } else {
+            layoutSelected = false;
+          }
+          return console.log('selesai');
+        });
+      return layoutSelected;
+    }
+  }
+
+  filterDot = (param) => {
+    let valueDot = '';
+    if (typeof param === 'string') {
+      valueDot = (param.substr(param.length - 4)).charAt(0);
+    }
+    return valueDot;
+  };
+
+
+  searchOnChange = (searchCategory) => {
+    const { name } = this.state;
+    const { load } = this.props;
+    const that = this;
+
+    setTimeout(() => {
+      that.setState({ category: searchCategory });
+      load({ name: { name }, category: searchCategory || 0 }).then(result => {
+        that.setState({ articles: result });
+      });
+    }, 100);
+  }
+
+  // -------------------------------
 
   /**
-   * Handle sukses setelah login
+   * Melakukan pengecekan teks setiap ada perubahan input pada inputText
+   * Jika teks (karakter) yang di-input-kan memiliki kesamaan dengan data NAMA atau ALAMAT mitra
+   * list data akan muncul sesuai teks yang diinputkan
    *
-   * @param {object} result - Berisi info callbacks dari @function register
-   * @return {object}
+   * @param {string} searchName
+   * @returns {object}
+   * @memberOf PartnersAddress
+   */
+  // onSearch = (searchName: string) => {
+  //   setTimeout(() => {
+  //     const resultPartners = listPartners
+  //       .branchs
+  //       .filter(mitra => mitra.name.toLowerCase().includes(searchName.toLowerCase()) ||
+  //       mitra.address.toLowerCase().includes(searchName.toLowerCase()));
+  //     if (searchName !== '') {
+  //       this.setState({ branchPartnersState: resultPartners });
+  //     } else {
+  //       this.setState({ branchPartnersState: listPartners.branchs });
+  //     }
+  //   }, 100);
+  // }
+
+  /**
+   * Cek apakah sedang dalam keadaan oauth / tidak
+   *
+   * @returns {boolean}
    * @memberOf Register
    */
-  successRegister = (result: {message: string, user_id: string}) => {
-    console.log('register done');
-    this
-      .props
-      .notifSend({ message: 'You\'r now registered !', kind: 'success' });
-    return result;
-  }
+  // getInitialValues = () => {
+  //   const { location } = this.props;
+  //   return location.state && location.state.oauth;
+  // }
+
+  /**
+   * Mendapatkan data dari file data/branch.json dan merubah isinya menjadi array of object
+   *
+   * @returns {object}
+   * @memberOf PartnersAddress
+   */
+  // getPartners = () => {
+  //   const partners = [];
+  //   let idx = 0;
+
+  //   this
+  //     .state
+  //     .branchPartnersState
+  //     .map((branch) => {
+  //       if (branch.visible !== false) {
+  //         ++idx;
+  //         branch.number = idx;
+  //         partners.push(branch);
+  //       }
+  //       return branch;
+  //     });
+
+  //   return partners;
+  // }
+
+  // // register = data => this.successRegister(data);
+  // /**
+  //  * Handle registrasi
+  //  *
+  //  * @param {object} data - Berisi username, password, dan rememberme
+  //  * @return {Promise<data>}
+  //  * @memberOf Register
+  //  */
+  // register = (data: {message: string, user_id: string}) => this.props.register(data).then(this.successRegister);
+
+  // /**
+  //  * Handle sukses setelah login
+  //  *
+  //  * @param {object} result - Berisi info callbacks dari @function register
+  //  * @return {object}
+  //  * @memberOf Register
+  //  */
+  // successRegister = (result: {message: string, user_id: string}) => {
+  //   console.log('register done');
+  //   this
+  //     .props
+  //     .notifSend({ message: 'You\'r now registered !', kind: 'success' });
+  //   return result;
+  // }
 
   handleToggle = () => this.setState({ open: !this.state.open });
 
@@ -205,9 +399,13 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    const { sheet: {
+    const { loading,
+      // articlesData,
+      sheet: {
         classes
-      }, handleSubmit, submitting } = this.props;
+      },
+      // handleSubmit, submitting
+    } = this.props;
 
     console.log(this.state.formShow);
 
@@ -226,6 +424,31 @@ export default class Dashboard extends Component {
       />,
     ];
 
+
+    // const { loading,
+    // } = this.props;
+  //  const { sheet: {
+  //      classes
+  //    } } = this.props;
+    console.log(this.state.articles);
+    let articlesCollection;
+    // let articlesCollection = articlesData;
+    // if (articlesData) {
+      // articlesCollection = articlesData;
+    // let articlesCollectionNoImage;
+    if (this.getLayout() === false) {
+      articlesCollection = [];
+      // articlesCollectionNoImage = this.state.articles;
+    } else if (this.getLayout() === true) {
+      // articlesCollectionNoImage = [];
+      articlesCollection = this.state.articles;
+    }
+    console.log(articlesCollection);
+    // }
+    // else {
+    //   articlesCollection = articlesData;
+    // }
+
     return (
       <div>
         <div className={classes.openingArea}></div>
@@ -241,24 +464,28 @@ export default class Dashboard extends Component {
               <div className={classes.wrap}>
                 <SearchBox onSearch={this.onSearch} />
                 <div>
-                  {this
-                  .getPartners()
+                  {/* Tampilkan loader jika data sedang di load */}
+                  {loading && <Loader />}
+                  {/* Tampil jika data kosong */}
+                  {(!articlesCollection) && <Landing small>Belum ada informasi</Landing>}
+                  <Spacer />
+                  {/* Tampilan riwayat taksiran */}
+                  {!loading && articlesCollection
                   .length > 0 && <div className={classes.listWrapper}>
-                    {this
-                      .getPartners()
+                    {!loading && articlesCollection
                       .map(
-                        (mitra) => <div key={`mitra-${mitra.number}`} className={classes.gridItem}>
+                        (mitra) => <div key={`mitra-${mitra.articleId}`} className={classes.gridItem}>
                           <div className={classes.gridCard}>
                             <div className={classes.gridContentWrapper}>
                               <div className={classes.gridImageWrapper}>
                                 <img className={classes.gridImage} src={`${sampleImage}`} alt="Mekar" />
                               </div>
-                              <h4 className={classes.gridTitle}>{mitra.name}</h4>
-                              <p className={classes.gridBodyCopy}>{mitra.telephone}</p>
+                              <h4 className={classes.gridTitle}>{mitra.title}</h4>
+                              <p className={classes.gridBodyCopy}>{mitra.category}</p>
                               <div className={classes.blockAction}>
                                 <RaisedButton
                                   label="Edit"
-                                  onTouchTap={() => this.handleToggleEditForm(mitra.id)}
+                                  onTouchTap={() => this.handleToggleEditForm(mitra.articleId)}
                                 />
                                 <RaisedButton
                                   labelStyle={styles.dangerText}
@@ -268,13 +495,12 @@ export default class Dashboard extends Component {
                               </div>
                             </div>
                           </div>
-                          <div id={`item${mitra.id}`}></div>
+                          <div id={`item${mitra.articleId}`}></div>
                         </div>
                         )
                     }
                   </div>}
-                  {this
-                    .getPartners()
+                  {!loading && articlesCollection
                     .length === 0 && <Content className={classes.textCenter}>
                       <h4>Nama toko atau alamat yang Anda cari belum ada.<br /> Mohon cari dengan kata kunci lain</h4>
                     </Content>
@@ -317,7 +543,7 @@ export default class Dashboard extends Component {
           <Spacer />
           <Spacer />
           <Spacer />
-          <form onSubmit={handleSubmit} noValidate className={classes.formWrap}>
+          <form /* onSubmit={handleSubmit} */ noValidate className={classes.formWrap}>
             <div style={styles.textAlignLeft}>
               <Field
                 name="name"
@@ -356,7 +582,7 @@ export default class Dashboard extends Component {
               id="signup-submit"
               label="Daftar"
               type="submit"
-              submitting={submitting}
+              /* submitting={submitting} */
               secondary />
           </form>
         </Drawer>
