@@ -40,7 +40,7 @@ export default class SearchBox extends Component {
       <div className={classes.wrap}>
         <div className={classes.positionRelative}>
           <TextField
-            hintText="Cari nama toko atau alamat terdekat"
+            hintText="Search with keywords you want ..."
             ref={(textField) => { this.searchName = textField; }}
             fullWidth
             style={styles.searchBoxInput}

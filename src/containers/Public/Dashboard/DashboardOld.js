@@ -8,6 +8,7 @@ import {
     CardHeader
 } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import {
     connect
 } from 'react-redux';
@@ -22,12 +23,13 @@ import {
 
 import { reduxForm,
   Field,
+  // propTypes
 } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 
 import {
-  letter
-} from 'utils/masking';
+  // number,
+  letter } from 'utils/masking';
 
 import listPartners from 'data/branch.json';
 
@@ -35,27 +37,26 @@ import {
   asyncConnect
 } from 'redux-connect';
 import * as articlesActions from 'redux/modules/public/articles';
-import * as categoriesActions from 'redux/modules/public/categories';
-// import dataPawnSimulation from 'data/pawn/simulation.json';
+import dataPawnSimulation from 'data/pawn/simulation.json';
 
 import SearchBox from './SearchBox';
+
+import sampleImage from './img/mekar.jpg';
 
 import {
     Container,
     Content,
     Spacer,
     Button,
+    // Link,
+    Loader,
+    Landing,
 } from '../../UI';
 
 import styles from './profileStyles';
 
-// import Articles from './Data/Articles';
-import Categories from './Data/Categories';
-// import Users from './Data/Users';
-
 // Inisialiasi action
 const { load: loadArticles } = articlesActions;
-const { load: loadCategories } = categoriesActions;
 
 @injectSheet(styles)
 
@@ -71,20 +72,13 @@ const { load: loadCategories } = categoriesActions;
        * Request data
        */
       promises.push(dispatch(loadArticles()));
-      promises.push(dispatch(loadCategories()));
 
       return Promise.all(promises);
     }
   }
 ])
-@connect(state => ({
-  articlesData: state.articles.data,
-  loading: state.articles.loading,
-
-  categoriesData: state.articles.data,
-}), {
-  ...articlesActions,
-  ...categoriesActions
+@connect(state => ({ articlesData: state.articles.data, loading: state.articles.loading }), {
+  ...articlesActions
 })
 
 @reduxForm({ form: 'formArticles', formKey: 'formArticles' })
@@ -96,13 +90,12 @@ export default class Dashboard extends Component {
     sheet: PropTypes.object.isRequired,
     load: PropTypes.func.isRequired,
     articlesData: PropTypes.object.isRequired,
-    categoriesData: PropTypes.object.isRequired,
+    loading: PropTypes.bool,
     initialize: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     articlesData: null,
-    categoriesData: null,
     loading: false
   }
 
@@ -118,8 +111,8 @@ export default class Dashboard extends Component {
     branchPartnersState: listPartners.branchs,
     appraisalHistories: [],
     formShow: false,
-    // category: 0, // Default ke opsi -> Semua
-    // categories: dataPawnSimulation.categories,
+    category: 0, // Default ke opsi -> Semua
+    categories: dataPawnSimulation.categories,
     name: null,
     articles: [],
     selectedDataEdit: null,
@@ -141,17 +134,13 @@ export default class Dashboard extends Component {
     }, 100);
   }
   componentDidMount = () => {
-    const { articlesData, categoriesData } = this.props;
+    const { articlesData } = this.props;
     if (articlesData) {
       this.setState({ articles: articlesData });
     }
-    if (categoriesData) {
-      this.setState({ articles: categoriesData });
-    }
   }
   componentWillReceiveProps = (nextProps) => {
-    // this.setState({ articles: nextProps.articlesData });
-    this.setState({ articles: nextProps.categoriesData });
+    this.setState({ articles: nextProps.articlesData });
   }
   componentWillUnmount = () => {
     const { categories } = this.state;
@@ -282,11 +271,15 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    const {
+    const { loading,
       sheet: {
         classes
       },
     } = this.props;
+
+    // const nama = 'joko';
+
+    console.log(this.state.formShow);
 
     const actions = [
       <FlatButton
@@ -324,13 +317,13 @@ export default class Dashboard extends Component {
               <h1 className={classes.titleContent}>Some Title</h1>
               <div className={classes.wrap}>
                 <SearchBox onSearch={this.onSearch} />
-                {/* <div>
-                  {/* Tampilkan loader jika data sedang di load * /}
+                <div>
+                  {/* Tampilkan loader jika data sedang di load */}
                   {loading && <Loader />}
-                  {/* Tampil jika data kosong * /}
+                  {/* Tampil jika data kosong */}
                   {(!articlesCollection) && <Landing small>Belum ada informasi</Landing>}
                   <Spacer />
-                  {/* Tampilan riwayat taksiran * /}
+                  {/* Tampilan riwayat taksiran */}
                   {!loading && articlesCollection
                   .length > 0 && <div className={classes.listWrapper}>
                     {!loading && articlesCollection
@@ -366,17 +359,7 @@ export default class Dashboard extends Component {
                       <h4>Nama toko atau alamat yang Anda cari belum ada.<br /> Mohon cari dengan kata kunci lain</h4>
                     </Content>
                   }
-                </div> */}
-                {/* <Articles
-                  articlesCollection={articlesCollection}
-                  loadDataForm={this.loadDataForm}
-                  handleDialogOpen={this.handleDialogOpen}
-                /> */}
-                <Categories
-                  articlesCollection={articlesCollection}
-                  loadDataForm={this.loadDataForm}
-                  handleDialogOpen={this.handleDialogOpen}
-                />
+                </div>
               </div>
             </Content>
           </Card>

@@ -56,7 +56,7 @@ const styles = {
   },
   listWrapper: {
     width: '100%',
-    margin: '50px auto',
+    margin: '25px auto 50px',
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',

@@ -8,6 +8,8 @@ import info from './modules/info';
 import branchs from './modules/public/repository';
 import appraisalHistories from './modules/public/appraisalHistories';
 import articles from './modules/public/articles';
+import categories from './modules/public/categories';
+import users from './modules/public/users';
 
 export default function createReducers(asyncReducers) {
   return {
@@ -21,6 +23,8 @@ export default function createReducers(asyncReducers) {
     branchs,
     appraisalHistories,
     articles,
+    categories,
+    users,
     ...asyncReducers
   };
 }

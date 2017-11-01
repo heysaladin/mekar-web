@@ -66,7 +66,7 @@ export default {
   card: {
     borderRadius: '5px !important',
     overflow: 'hidden',
-    marginTop: -68,
+    marginTop: -65,
     marginBottom: 50
   },
   contentWrapper: {
@@ -74,7 +74,7 @@ export default {
   },
   listWrapper: {
     width: '100%',
-    margin: '30px auto',
+    // margin: '30px auto',
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',

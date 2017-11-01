@@ -14,7 +14,6 @@ export default {
     padding: '0px 40px 0px 20px',
     borderRadius: 35,
     boxShadow: '0 0 5px rgba(0,0,0,.25)',
-    // border: '1px solid #C8C8C8',
     color: '#C8C8C8',
     background: '#fff'
   },

@@ -53,14 +53,38 @@ export default store => {
         </Route>
 
         {/* Routes */}
-        <Route
+        {/* <Route
           path="inner"
           getComponent={() => injectReducerAndRender(
             {
               appraisalHistories: System.import('./redux/modules/public/articles')
             },
             System.import('./containers/Public/Inner/Inner'))}
-          /* getComponent={() => System.import('./containers/Public/Inner/Inner')} */
+          /* getComponent={() => System.import('./containers/Public/Inner/Inner')} * /
+          /> */}
+        <Route
+          path="articles"
+          getComponent={() => injectReducerAndRender(
+            {
+              appraisalHistories: System.import('./redux/modules/public/articles')
+            },
+            System.import('./containers/Public/Inner/Articles'))}
+          />
+        <Route
+          path="categories"
+          getComponent={() => injectReducerAndRender(
+            {
+              appraisalHistories: System.import('./redux/modules/public/categories')
+            },
+            System.import('./containers/Public/Inner/Categories'))}
+          />
+        <Route
+          path="users"
+          getComponent={() => injectReducerAndRender(
+            {
+              appraisalHistories: System.import('./redux/modules/public/users')
+            },
+            System.import('./containers/Public/Inner/Users'))}
           />
         <Route
           path="details/:id"
@@ -83,6 +107,14 @@ export default store => {
             System.import('./containers/Public/Dashboard/Dashboard'))}
           /* getComponent={() => System.import('./containers/Public/Dashboard/Dashboard')} */
           />
+        {/* <Route
+          path="articles"
+          getComponent={() => injectReducerAndRender(
+            {
+              appraisalHistories: System.import('./redux/modules/public/articles')
+            },
+            System.import('./containers/Public/Dashboard/Data/Articles'))}
+          /> */}
         <Route
           path="riwayat-taksiran"
           getComponent={() => injectReducerAndRender(
